@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Digi Note</string>
+    <string name="title_activity_description">Description</string>
+
+    <string name="action_share">share data</string>
+
+    <string name="title_activity_content_main">Digi Note</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_exit">Exit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="digi_note">Digi-Note</string>
+    <string name="how_it_work">How it Work</string>
+    <string name="add">add</string>
+    <string name="search">Search</string>
+    <string name="delete_edit">Delete/ (Edit)</string>
+    <string name="communicate">Communicate</string>
+    <string name="rate_us">rate_us</string>
+    <string name="share">share</string>
+    <string name="smart_way_of_learning">Smart way of learning</string>
+    <string name="digi_notes">Digi Notes</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Add Notes </string>
+    <string name="slide_1_desc">The easiest way to store your favourite topics!</string>
+
+    <string name="slide_2_title">Search </string>
+    <string name="slide_2_desc">Easy to search Notes by Time or by Title</string>
+
+    <string name="slide_3_title">Update AND Delete</string>
+    <string name="slide_3_desc">Easy Way to Delete And Update Via long press in Search Item</string>
+
+    <string name="slide_4_title">Easy Learning</string>
+    <string name="slide_4_desc">Get full Notes by tap Away!!
+    READY ........</string>
+
+</resources>

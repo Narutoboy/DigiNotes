@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_edit"
+            android:icon="@drawable/ic_menu_manage"
+
+            android:title="@string/how_it_work" />
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@android:drawable/ic_input_add"
+            android:title="@string/add" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="@string/search" />
+
+        <item
+            android:id="@+id/nav_delete"
+
+            android:icon="@android:drawable/ic_menu_delete"
+            android:title="@string/delete_edit" />
+    </group>
+
+    <item android:title="@string/communicate">
+        <menu>
+            <item
+                android:id="@+id/rate_us"
+                android:icon="@android:drawable/btn_star_big_on"
+                android:title="@string/rate_us" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/share" />
+        </menu>
+    </item>
+
+</menu>

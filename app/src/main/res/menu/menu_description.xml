@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.do_big.diginotes.Description">
+    <item
+    android:id="@+id/action_share"
+    android:orderInCategory="100"
+    android:title="@string/action_share"
+    app:showAsAction="never" />
+  <!--  <item
+        android:id="@+id/action_rateus"
+        android:orderInCategory="100"
+        android:title="rate us"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/shareApp"
+        android:orderInCategory="100"
+        android:title="Share App"
+        app:showAsAction="never" />-->
+
+</menu>
