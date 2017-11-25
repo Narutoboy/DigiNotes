@@ -32,7 +32,7 @@ public class Description extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.right,R.anim.fadeout);
         setContentView(R.layout.activity_description);
-        content = (TextView) findViewById(R.id.content);
+        content = findViewById(R.id.content);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-9084411889674439/1879858158");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -46,10 +46,10 @@ public class Description extends AppCompatActivity {
         });
         final String des = getIntent().getExtras().getString("des");
         show(des);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setImageResource(android.R.drawable.ic_lock_silent_mode_off);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +139,6 @@ public class Description extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_share:
                 Intent sendIntent = new Intent();
@@ -149,9 +148,10 @@ public class Description extends AppCompatActivity {
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 return true;
-           /* case R.id.action_rateus:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.bmiEvaluator")));
+            case R.id.action_settings:
+                startActivity(new Intent(Description.this, SettingsActivity.class));
                 return  true;
+                /*
             case R.id.shareApp:
                 Intent shareintent = new Intent();
                 shareintent.setAction(Intent.ACTION_SEND);

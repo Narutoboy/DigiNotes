@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.do_big.diginotes.Description">
     <item
-    android:id="@+id/action_share"
-    android:orderInCategory="100"
-    android:title="@string/action_share"
-    app:showAsAction="never" />
-  <!--  <item
-        android:id="@+id/action_rateus"
+        android:id="@+id/action_share"
+        android:icon="?attr/actionModeShareDrawable"
         android:orderInCategory="100"
-        android:title="rate us"
-        app:showAsAction="never" />
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/shareApp"
+        android:id="@+id/action_settings"
+        android:icon="@drawable/setting_icon"
         android:orderInCategory="100"
-        android:title="Share App"
-        app:showAsAction="never" />-->
+        android:title="Settings"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <!--
+      <item
+          android:id="@+id/shareApp"
+          android:orderInCategory="100"
+          android:title="Share App"
+          app:showAsAction="never" />-->
 
 </menu>

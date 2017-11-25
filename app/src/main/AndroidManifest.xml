@@ -15,11 +15,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Search"
-            />
+        <activity android:name=".Search" />
         <activity
             android:name=".Description"
             android:label="@string/title_activity_description"
@@ -35,12 +35,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
-
             </intent-filter>
-
         </activity>
-        <activity android:name=".HowitWork"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity
+            android:name=".HowitWork"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

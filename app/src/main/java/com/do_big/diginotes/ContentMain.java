@@ -36,22 +36,21 @@ import java.util.Date;
 
 public class ContentMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private AdView mAdView;
     Button btnSearch;
+    DatePickerDialog datePickerDialog;
+    private AdView mAdView;
     private EditText etMultiline;
     private EditText etKeyword;
     private TextView btnDate;
     private int day, month, year;
-    DatePickerDialog datePickerDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.right,R.anim.fadeout);
+        overridePendingTransition(R.anim.right, R.anim.fadeout);
         setContentView(R.layout.activity_content_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
        /* ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipBoard.addPrimaryClipChangedListener(new ClipboardListener());
@@ -59,12 +58,12 @@ public class ContentMain extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
        */
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-       // btnSearch = (Button) findViewById(R.id.btnSearch);
-        etMultiline = (EditText) findViewById(R.id.descript);
-        etKeyword = (EditText) findViewById(R.id.etKeyword);
-        btnDate = (TextView) findViewById(R.id.btnDate);
-        btnDate.setText( new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        Button btnSave = findViewById(R.id.btnSave);
+        // btnSearch = (Button) findViewById(R.id.btnSearch);
+        etMultiline = findViewById(R.id.descript);
+        etKeyword = findViewById(R.id.etKeyword);
+        btnDate = findViewById(R.id.btnDate);
+        btnDate.setText("Date:-  " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         setupDB();
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,13 +84,13 @@ public class ContentMain extends AppCompatActivity
         }
 
         //end here
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -102,9 +101,10 @@ public class ContentMain extends AppCompatActivity
             // Update UI to reflect text being shared
         }
     }
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -121,7 +121,7 @@ public class ContentMain extends AppCompatActivity
                     ContentMain.this.finish();
                 }
             });
-            overridePendingTransition(R.anim.right,R.anim.fadeout);
+            overridePendingTransition(R.anim.right, R.anim.fadeout);
             b1.show();
 
         }
@@ -129,7 +129,6 @@ public class ContentMain extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.content_main, menu);
         return true;
     }
@@ -137,7 +136,7 @@ public class ContentMain extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-     if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             onBackPressed();
             return true;
         }
@@ -152,21 +151,18 @@ public class ContentMain extends AppCompatActivity
 
         if (id == R.id.nav_add) {
         } else if (id == R.id.nav_search) {
-            startActivity( new Intent(ContentMain.this, Search.class));
+            startActivity(new Intent(ContentMain.this, Search.class));
             Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_edit) {
-            startActivity(new Intent(ContentMain.this,HowitWork.class));
+            startActivity(new Intent(ContentMain.this, HowitWork.class));
         } else if (id == R.id.nav_delete) {
             Toast.makeText(this, "Long press ITEM for delete IT", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(ContentMain.this, Search.class));
-        }
-        else if (id == R.id.rate_us) {
+        } else if (id == R.id.rate_us) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.do_big.diginotes")));
-            overridePendingTransition(R.anim.right,R.anim.fadeout);
+            overridePendingTransition(R.anim.right, R.anim.fadeout);
             return true;
-        }
-
-        else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
 
 
             Intent sendIntent = new Intent();
@@ -175,11 +171,11 @@ public class ContentMain extends AppCompatActivity
                     "Digi Note : https://play.google.com/store/apps/details?id=com.do_big.diginotes");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
-            overridePendingTransition(R.anim.right,R.anim.fadeout);
+            overridePendingTransition(R.anim.right, R.anim.fadeout);
             return true;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -199,9 +195,7 @@ public class ContentMain extends AppCompatActivity
                     etKeyword.setError("Title cannot be null");
                 }/*else if (etKeyword.getText().toString().contains(" ")||etKeyword.getText().toString().contains(".")) {
                     etKeyword.setError("there should  be no space , replace space with comma");
-                }*/
-
-                else{
+                }*/ else {
                     insert();
                     etMultiline.setText(null);
                     etKeyword.setText("");
@@ -224,7 +218,7 @@ public class ContentMain extends AppCompatActivity
                 setDate.setContentView(R.layout.date);
                 setDate.show();
                 DatePicker date = setDate.findViewById(R.id.datePicker);
-               // date.setMinDate(System.currentTimeMillis() - 1000);
+                // date.setMinDate(System.currentTimeMillis() - 1000);
                 Calendar calender = Calendar.getInstance();
 
                 DatePicker.OnDateChangedListener onDateChangedListener = new DatePicker.OnDateChangedListener() {
@@ -259,17 +253,19 @@ public class ContentMain extends AppCompatActivity
                 }, day, month, year);
                
                 datePickerDialog.show();
-*/                break;
+*/
+                break;
 
         }
     }
+
     private void insert() {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";
 
         Object oa[] = new Object[3];
         oa[0] = etMultiline.getText().toString().trim();
-        oa[1] = etKeyword.getText().toString().trim()+ btnDate.getText().toString().trim();
+        oa[1] = etKeyword.getText().toString().trim() + btnDate.getText().toString().trim();
         oa[2] = btnDate.getText().toString().trim();
         db.execSQL(sql, oa);
         db.close();
@@ -284,13 +280,14 @@ public class ContentMain extends AppCompatActivity
         db.execSQL(sql);
         db.close();
     }
+
     private class ClipboardListener implements ClipboardManager.OnPrimaryClipChangedListener {
         public void onPrimaryClipChanged() {
             ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             CharSequence pasteData = "";
             ClipData.Item item = clipBoard.getPrimaryClip().getItemAt(0);
             pasteData = item.getText();
-         //  View view =getCurrentFocus();
+            //  View view =getCurrentFocus();
             Toast.makeText(getApplicationContext(), "copied val=" + pasteData,
                     Toast.LENGTH_SHORT).show();
           /*  Snackbar.make((View) getSystemService(CLIPBOARD_SERVICE), "Save with digi Notes", Snackbar.LENGTH_LONG)
