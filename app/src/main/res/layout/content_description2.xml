@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/description"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blueback"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.do_big.diginotes.Description"
-
-    tools:showIn="@layout/activity_description">
+    tools:showIn="@layout/activity_description2">
 
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-
         android:autoLink="all"
         android:fontFamily="@font/alike_angular"
-        android:paddingBottom="30dp"
         android:textAlignment="viewStart"
         android:textColor="@android:color/background_dark"
         android:textIsSelectable="true"
         android:textSize="30sp" />
-
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>

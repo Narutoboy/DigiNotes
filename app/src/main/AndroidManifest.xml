@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Search" />
+        <activity
+            android:name=".Search"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Description"
             android:label="@string/title_activity_description"
@@ -42,11 +44,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".RecylerSearch"></activity>
     </application>
 
 </manifest>

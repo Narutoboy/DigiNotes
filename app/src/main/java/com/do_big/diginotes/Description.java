@@ -1,9 +1,12 @@
 package com.do_big.diginotes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -21,18 +25,22 @@ import com.google.android.gms.ads.InterstitialAd;
 import java.util.Locale;
 
 public class Description extends AppCompatActivity {
+    LinearLayout back;
     private TextView content;
     private TextToSpeech tts;
     private String data;
+
     private int ttsStatus;
     private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.right,R.anim.fadeout);
-        setContentView(R.layout.activity_description);
+        overridePendingTransition(R.anim.right, R.anim.fadeout);
+        setContentView(R.layout.activity_description2);
         content = findViewById(R.id.content);
+        back = findViewById(R.id.background);
+
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-9084411889674439/1879858158");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -131,12 +139,33 @@ public class Description extends AppCompatActivity {
     //create menu
 
 
+    @Override
+    protected void onResume() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String textsize = settings.getString("TextSize", "18");
+        Log.d("textSize", "" + textsize);
+        content.setTextSize(Float.parseFloat(textsize));
+        boolean nightmode = settings.getBoolean("nightMode", false);
+        if (nightmode) {
+            content.setTextColor(Color.WHITE);
+            back.setBackgroundColor(Color.BLACK);
+
+            // content.append("true");
+        } else {
+            content.setTextColor(Color.BLACK);
+            back.setBackgroundColor(Color.WHITE);
+            //content.append("false");
+        }
+        super.onResume();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_description, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -144,13 +173,13 @@ public class Description extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT,
-                         content.getText().toString()+"\n\tDigiNote");
+                        content.getText().toString() + "\n\tDigiNote");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(Description.this, SettingsActivity.class));
-                return  true;
+                return true;
                 /*
             case R.id.shareApp:
                 Intent shareintent = new Intent();
