@@ -20,12 +20,15 @@ import java.util.TimerTask;
 public class SplashScreen extends AppCompatActivity {
 
 
+    public static final int SPLASH_DELAY = 2500;
+    public static final int WELCOME_DELAY = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         overridePendingTransition(R.anim.left, R.anim.fadeout);
-        TextView title = findViewById(R.id.textView2);
+        TextView title = findViewById(R.id.textView_title);
         Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fadein);
         title.startAnimation(animation);
         PrefManager prefManager = new PrefManager(this);
@@ -44,7 +47,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
             };
             Timer t=new Timer();
-            t.schedule(tt,1000);
+            t.schedule(tt, WELCOME_DELAY);
 
         }
         else{
@@ -57,12 +60,11 @@ public class SplashScreen extends AppCompatActivity {
                 }
             };
             Timer t=new Timer();
-            t.schedule(tt,2500);
+            t.schedule(tt, SPLASH_DELAY);
 
 
         }
 
-        //start here
 
 
     }
