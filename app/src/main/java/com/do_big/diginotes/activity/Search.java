@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,8 +19,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.do_big.diginotes.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.LinkedList;
 
@@ -29,20 +26,17 @@ public class Search extends AppCompatActivity {
     private EditText etsearch;
     private ListView listview;
     private String data;
-    private InterstitialAd mInterstitialAd;
+    //private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        overridePendingTransition(R.anim.right,R.anim.fadeout);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-9084411889674439/1879858158");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-       // String data = getIntent().getExtras().getString("search");
-        etsearch = (EditText) findViewById(R.id.etSearch);
-     //   etsearch.setText(data);
-        listview = (ListView) findViewById(R.id.list);
+        overridePendingTransition(R.anim.right, R.anim.fadeout);
+        // String data = getIntent().getExtras().getString("search");
+        etsearch = findViewById(R.id.etSearch);
+        //   etsearch.setText(data);
+        listview = findViewById(R.id.list);
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,18 +55,14 @@ public class Search extends AppCompatActivity {
                 ab1.setNegativeButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      Intent share = new Intent(Search.this, MainActivity.class);
+                        Intent share = new Intent(Search.this, MainActivity.class);
                         share.setAction(Intent.ACTION_SEND);
                         share.putExtra(Intent.EXTRA_TEXT,
-                               show(name) );
+                                show(name));
                         share.setType("text/plain");
                         startActivity(share);
                         delete(name);
-                        if (mInterstitialAd.isLoaded()) {
-                            mInterstitialAd.show();
-                        } else {
-                            Log.d("TAG", "The interstitial wasn't loaded yet.");
-                        }
+
 
                     }
                 });
@@ -95,7 +85,7 @@ public class Search extends AppCompatActivity {
                 TextView tv1 = (TextView) view;
                 String s1 = tv1.getText().toString();
                 final String name = s1.substring(0, s1.indexOf(" :: "));
-                              Intent detailintent = new Intent(Search.this, Description.class);
+                Intent detailintent = new Intent(Search.this, Description.class);
                 detailintent.putExtra("des", name);
                 Toast.makeText(Search.this, "" + name, Toast.LENGTH_SHORT).show();
                 startActivity(detailintent);
@@ -120,6 +110,7 @@ public class Search extends AppCompatActivity {
             }
         });
     }
+
     private String show(String name) {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ? ";
@@ -138,6 +129,7 @@ public class Search extends AppCompatActivity {
         db.close();
         return data;
     }
+
     private void delete(String name) {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "delete from gtable where keyword = ? ";
@@ -150,6 +142,7 @@ public class Search extends AppCompatActivity {
         // Toast.makeText(Main2Activity.this, "Done", Toast.LENGTH_SHORT).show();
         // populateList();
     }
+
     private void populateList() {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ?  or date like ?";
@@ -170,5 +163,5 @@ public class Search extends AppCompatActivity {
         listview.setAdapter(aa);
         db.close();
 
-}
+    }
 }

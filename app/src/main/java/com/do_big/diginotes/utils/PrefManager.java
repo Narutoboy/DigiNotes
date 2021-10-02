@@ -2,7 +2,7 @@ package com.do_big.diginotes.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-class PrefManager {
+public class PrefManager {
     private final SharedPreferences pref;
     private final SharedPreferences.Editor editor;
     private final Context _context;

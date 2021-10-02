@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.do_big.diginotes.PrefManager;
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.utils.PrefManager;
 
 public class WelcomeActivity extends AppCompatActivity {
 

@@ -21,7 +21,7 @@ import com.google.android.gms.ads.AdView;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
-    ArrayList<Titles> res;
+    private ArrayList<Titles> resList;
     private EditText etsearch;
     private String data;
     private RecyclerView mRecyclerView;
@@ -34,7 +34,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyler_search);
-        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         etsearch = findViewById(R.id.etSearch);
@@ -75,14 +75,14 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
         Cursor c1 = db.rawQuery(sql, oa);
         int in1 = c1.getColumnIndex("keyword");
         int in2 = c1.getColumnIndex("date");
-        res = new ArrayList<>();
+        resList = new ArrayList<>();
         while (c1.moveToNext()) {
             String name = c1.getString(in1);
             String date = c1.getString(in2);
-            res.add(new Titles(name, date));
+            resList.add(new Titles(name, date));
         }
 
-        SearchAdapter searchAdapter = new SearchAdapter(res, this);
+        SearchAdapter searchAdapter = new SearchAdapter(resList, this);
         mRecyclerView.setAdapter(searchAdapter);
         db.close();
 

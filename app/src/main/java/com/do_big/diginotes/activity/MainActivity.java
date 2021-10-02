@@ -1,6 +1,5 @@
 package com.do_big.diginotes.activity;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -30,7 +29,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.do_big.diginotes.R;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -44,14 +42,14 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DatePickerDialog datePickerDialog;
+
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private ImageButton mic;
     private AdView mAdView;
     private EditText etMultiline;
     private EditText etKeyword;
     private TextView btnDate;
     private int day, month, year;
-    ImageButton mic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +59,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_content_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         mic = findViewById(R.id.btnmic);
         Button btnSave = findViewById(R.id.btnSave);
         etMultiline = findViewById(R.id.descript);
@@ -297,6 +292,7 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+
     private void insert() {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";

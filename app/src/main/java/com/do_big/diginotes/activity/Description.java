@@ -20,21 +20,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.do_big.diginotes.R;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
 public class Description extends AppCompatActivity {
-    LinearLayout back;
+    private LinearLayout back;
+    private String des;
     private TextView content;
     private TextToSpeech tts;
     private String data;
-    String des;
     private int ttsStatus;
-    private InterstitialAd mInterstitialAd;
+    //private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +41,9 @@ public class Description extends AppCompatActivity {
         content = findViewById(R.id.content);
         back = findViewById(R.id.background);
 
-        mInterstitialAd = new InterstitialAd(this);
+       /* mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-9084411889674439/1879858158");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());*//**/
         tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -69,37 +66,7 @@ public class Description extends AppCompatActivity {
                 tts.speak(data, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                Log.i("Ads", "onAdLoaded");
-            }
 
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                Log.i("Ads", "onAdFailedToLoad");
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when the ad is displayed.
-                Log.i("Ads", "onAdOpened");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.i("Ads", "onAdLeftApplication");
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when when the interstitial ad is closed.
-                Log.i("Ads", "onAdClosed");
-            }
-        });
     }
 
     @Override
@@ -112,12 +79,8 @@ public class Description extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         tts.stop();
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            super.onBackPressed();
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
-        }
+        super.onBackPressed();
+
 
     }
 

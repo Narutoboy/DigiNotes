@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.do_big.diginotes.PrefManager;
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.utils.PrefManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,16 +22,16 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        overridePendingTransition(R.anim.left,R.anim.fadeout);
-        TextView title = (TextView) findViewById(R.id.textView2);
-        ImageView image = (ImageView) findViewById(R.id.imageView);
-        Animation animation= AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fadein);
-        Animation animimage= AnimationUtils.loadAnimation(SplashScreen.this, R.anim.rotate);
+        overridePendingTransition(R.anim.left, R.anim.fadeout);
+        TextView title = findViewById(R.id.textView2);
+        ImageView image = findViewById(R.id.imageView);
+        Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fadein);
+        Animation animimage = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.rotate);
         title.startAnimation(animation);
         image.startAnimation(animimage);
         PrefManager prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
-            TimerTask tt=new TimerTask() {
+            TimerTask tt = new TimerTask() {
                 @Override
 
                 public void run() {
