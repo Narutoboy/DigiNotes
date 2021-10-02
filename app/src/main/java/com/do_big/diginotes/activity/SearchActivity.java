@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.data.Titles;
+import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -66,7 +67,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
     }
 
     private void populateList() {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ?  or date like ?";
         String[] oa = new String[1];
         int i = 0;
@@ -89,7 +90,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
     }
 
     private String show(String name) {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ? ";
         String[] oa = new String[1];
         int i = 0;

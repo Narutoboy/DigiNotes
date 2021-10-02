@@ -2,7 +2,6 @@ package com.do_big.diginotes.activity;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -29,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -67,12 +67,7 @@ public class MainActivity extends AppCompatActivity
         btnDate.setText("Date:-  " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         setupDB();
         FloatingActionButton fab = findViewById(R.id.fab_search);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-            }
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -108,16 +103,8 @@ public class MainActivity extends AppCompatActivity
             AlertDialog.Builder b1 = new AlertDialog.Builder(MainActivity.this);
             b1.setTitle("Exit");
             b1.setMessage("Close Digi-Note");
-            b1.setPositiveButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                    arg0.cancel();
-                }
-            });
-            b1.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                    MainActivity.this.finish();
-                }
-            });
+            b1.setPositiveButton("No", (arg0, arg1) -> arg0.cancel());
+            b1.setNegativeButton("Yes", (arg0, arg1) -> MainActivity.this.finish());
             overridePendingTransition(R.anim.right, R.anim.fadeout);
             b1.show();
 
@@ -156,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Long press ITEM for delete IT", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this, Search.class));
         } else if (id == R.id.rate_us) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.do_big.diginotes")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
             overridePendingTransition(R.anim.right, R.anim.fadeout);
             return true;
         } else if (id == R.id.nav_share) {
@@ -165,7 +152,7 @@ public class MainActivity extends AppCompatActivity
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT,
-                    "Digi Note : https://play.google.com/store/apps/details?id=com.do_big.diginotes");
+                    "DigiNotes : https://play.google.com/store/apps/details?id=com.do_big.diginotes");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
             overridePendingTransition(R.anim.right, R.anim.fadeout);
@@ -187,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.btnSave:
 
                 if (TextUtils.isEmpty(etMultiline.getText().toString())) {
-                    etMultiline.setError("description cannot be null");
+                    etMultiline.setError("Description cannot be null");
                 } else if (TextUtils.isEmpty(etKeyword.getText().toString())) {
                     etKeyword.setError("Title cannot be null");
                 }/*else if (etKeyword.getText().toString().contains(" ")||etKeyword.getText().toString().contains(".")) {
@@ -294,7 +281,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void insert() {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";
 
         Object[] oa = new Object[3];
@@ -309,7 +296,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupDB() {
         //deleteDatabase("mydb");
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "create table if not exists gtable " + " (id INTEGER  PRIMARY KEY, description VARCHAR  NOT NULL  UNIQUE , keyword VARCHAR[50]  unique ,date VARCHAR)";
         db.execSQL(sql);
         db.close();

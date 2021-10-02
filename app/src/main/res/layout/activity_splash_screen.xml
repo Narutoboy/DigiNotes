@@ -11,7 +11,10 @@
         android:id="@+id/textView2"
         android:layout_width="411dp"
         android:layout_height="113dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="08dp"
+        android:layout_marginBottom="8dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="serif"
         android:text="@string/digi_note"
@@ -20,13 +23,16 @@
         android:textSize="36sp"
         android:textStyle="bold"
         android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="489dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/alex_brush"
         android:text="Smart Way of Learning!"
@@ -34,14 +40,24 @@
         android:textSize="30sp"
         android:textStyle="italic"
         android:typeface="normal"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="619dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="4dp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="411dp"
         android:layout_height="384dp"
-        app:srcCompat="@mipmap/round"
-        tools:layout_editor_absoluteY="74dp" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="31dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@mipmap/round" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

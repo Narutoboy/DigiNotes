@@ -1,11 +1,12 @@
 package com.do_big.diginotes.activity;
 
+import static com.do_big.diginotes.utils.AppConstant.DATABASE_NAME;
+
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +19,15 @@ import java.util.TimerTask;
 
 public class SplashScreen extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         overridePendingTransition(R.anim.left, R.anim.fadeout);
         TextView title = findViewById(R.id.textView2);
-        ImageView image = findViewById(R.id.imageView);
         Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fadein);
-        Animation animimage = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.rotate);
         title.startAnimation(animation);
-        image.startAnimation(animimage);
         PrefManager prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
             TimerTask tt = new TimerTask() {
@@ -69,7 +68,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void insert() {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";
 
         Object[] oa = new Object[3];
@@ -89,7 +88,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private void setupDB() {
         //deleteDatabase("mydb");
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "create table if not exists gtable " + " (id INTEGER  PRIMARY KEY, description VARCHAR  NOT NULL  UNIQUE , keyword VARCHAR[50]  unique ,date VARCHAR)";
         db.execSQL(sql);
         db.close();

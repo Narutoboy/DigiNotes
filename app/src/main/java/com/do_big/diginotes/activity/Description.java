@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
@@ -31,7 +32,7 @@ public class Description extends AppCompatActivity {
     private TextToSpeech tts;
     private String data;
     private int ttsStatus;
-    //private InterstitialAd mInterstitialAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,6 @@ public class Description extends AppCompatActivity {
         content = findViewById(R.id.content);
         back = findViewById(R.id.background);
 
-       /* mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-9084411889674439/1879858158");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());*//**/
         tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -85,13 +83,13 @@ public class Description extends AppCompatActivity {
     }
 
     private void show(String name) {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ? ";
         String[] oa = new String[1];
         int i = 0;
         oa[i] = "%" + name + "%";
         Cursor c1 = db.rawQuery(sql, oa);
-        int in1 = c1.getColumnIndex("description");
+        int in1 = c1.getColumnIndex(AppConstant.COLUMN_DESCRIPTION);
         while (c1.moveToNext()) {
             data = c1.getString(in1);
             content.setText(data);
@@ -105,7 +103,7 @@ public class Description extends AppCompatActivity {
 
     //create menu
     private void delete(String name) {
-        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
         String sql = "delete from gtable where keyword = ? ";
         Object[] oa = new Object[1];
         oa[0] = name;
