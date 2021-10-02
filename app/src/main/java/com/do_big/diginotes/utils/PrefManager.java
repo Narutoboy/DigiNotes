@@ -1,13 +1,14 @@
-package com.do_big.diginotes;
+package com.do_big.diginotes.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
+
 class PrefManager {
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-    private Context _context;
+    private final SharedPreferences pref;
+    private final SharedPreferences.Editor editor;
+    private final Context _context;
 
     // shared pref mode
-    private int PRIVATE_MODE = 0;
+    private final int PRIVATE_MODE = 0;
 
     // Shared preferences file name
     private static final String PREF_NAME = "androidhive-welcome";

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.do_big.diginotes.Description">
+    tools:context="com.do_big.diginotes.activity.Description">
     <item
         android:id="@+id/action_share"
         android:icon="?attr/actionModeShareDrawable"
@@ -13,6 +13,13 @@
         android:icon="@drawable/setting_icon"
         android:orderInCategory="100"
         android:title="Settings"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="100"
+        android:title="Edit"
         android:visible="true"
         app:showAsAction="ifRoom" />
     <!--

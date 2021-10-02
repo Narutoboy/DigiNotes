@@ -1,13 +1,10 @@
-package com.do_big.diginotes;
+package com.do_big.diginotes.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +14,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.do_big.diginotes.PrefManager;
+import com.do_big.diginotes.R;
 
 public class HowitWork extends AppCompatActivity {
 
@@ -28,7 +32,7 @@ public class HowitWork extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
     //  viewpager change listener
-    private ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {

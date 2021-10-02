@@ -1,4 +1,4 @@
-package com.do_big.diginotes;
+package com.do_big.diginotes.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,19 +8,22 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.do_big.diginotes.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
@@ -29,7 +32,7 @@ public class Description extends AppCompatActivity {
     private TextView content;
     private TextToSpeech tts;
     private String data;
-
+    String des;
     private int ttsStatus;
     private InterstitialAd mInterstitialAd;
 
@@ -52,7 +55,7 @@ public class Description extends AppCompatActivity {
 
             }
         });
-        final String des = getIntent().getExtras().getString("des");
+        des = getIntent().getExtras().getString("des");
         show(des);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -121,7 +124,7 @@ public class Description extends AppCompatActivity {
     private void show(String name) {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ? ";
-        String oa[] = new String[1];
+        String[] oa = new String[1];
         int i = 0;
         oa[i] = "%" + name + "%";
         Cursor c1 = db.rawQuery(sql, oa);
@@ -136,7 +139,19 @@ public class Description extends AppCompatActivity {
 
         db.close();
     }
+
     //create menu
+    private void delete(String name) {
+        SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
+        String sql = "delete from gtable where keyword = ? ";
+        Object[] oa = new Object[1];
+        oa[0] = name;
+        db.execSQL(sql, oa);
+        db.close();
+        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(Main2Activity.this, "Done", Toast.LENGTH_SHORT).show();
+        // populateList();
+    }
 
 
     @Override
@@ -179,6 +194,14 @@ public class Description extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(Description.this, SettingsActivity.class));
+                return true;
+            case R.id.action_edit:
+                Intent share = new Intent(Description.this, ContentMain.class);
+                share.setAction(Intent.ACTION_SEND);
+                share.putExtra(Intent.EXTRA_TEXT, data);
+                share.setType("text/plain");
+                startActivity(share);
+                delete(des);
                 return true;
                 /*
             case R.id.shareApp:

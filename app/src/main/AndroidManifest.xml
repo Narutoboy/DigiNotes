@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashScreen"
+            android:name=".activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,14 +20,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Search"
+            android:name=".activity.Search"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Description"
+            android:name=".activity.Description"
             android:label="@string/title_activity_description"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ContentMain"
+            android:name=".activity.ContentMain"
             android:label="@string/title_activity_content_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -40,17 +40,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HowitWork"
+            android:name=".activity.HowitWork"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".RecylerSearch"></activity>
+        <activity
+            android:name=".activity.RecylerSearch"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

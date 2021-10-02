@@ -1,22 +1,14 @@
-package com.do_big.diginotes;
+package com.do_big.diginotes.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,24 +18,40 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.do_big.diginotes.R;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ContentMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Button btnSearch;
+
     DatePickerDialog datePickerDialog;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
     private AdView mAdView;
     private EditText etMultiline;
     private EditText etKeyword;
     private TextView btnDate;
     private int day, month, year;
+    ImageButton mic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +61,11 @@ public class ContentMain extends AppCompatActivity
         setContentView(R.layout.activity_content_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       /* ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        clipBoard.addPrimaryClipChangedListener(new ClipboardListener());
-       *//* mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-       */
+        mic = findViewById(R.id.btnmic);
         Button btnSave = findViewById(R.id.btnSave);
-        // btnSearch = (Button) findViewById(R.id.btnSearch);
         etMultiline = findViewById(R.id.descript);
         etKeyword = findViewById(R.id.etKeyword);
         btnDate = findViewById(R.id.btnDate);
@@ -70,9 +75,7 @@ public class ContentMain extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContentMain.this, Search.class));
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                startActivity(new Intent(ContentMain.this, RecylerSearch.class));
             }
         });
         Intent intent = getIntent();
@@ -84,7 +87,6 @@ public class ContentMain extends AppCompatActivity
             }
         }
 
-        //end here
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -99,7 +101,6 @@ public class ContentMain extends AppCompatActivity
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             etMultiline.setText(sharedText);
-            // Update UI to reflect text being shared
         }
     }
 
@@ -152,7 +153,7 @@ public class ContentMain extends AppCompatActivity
 
         if (id == R.id.nav_add) {
         } else if (id == R.id.nav_search) {
-            startActivity(new Intent(ContentMain.this, Search.class));
+            startActivity(new Intent(ContentMain.this, RecylerSearch.class));
             Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_edit) {
             startActivity(new Intent(ContentMain.this, HowitWork.class));
@@ -213,6 +214,9 @@ public class ContentMain extends AppCompatActivity
                 Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
                 break;
 */
+            case R.id.btnmic:
+                promptSpeechInput();
+                break;
             case R.id.btnDate:
                 final Dialog setDate = new Dialog(ContentMain.this);
                 setDate.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -260,11 +264,44 @@ public class ContentMain extends AppCompatActivity
         }
     }
 
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    etMultiline.setText(result.get(0));
+                }
+                break;
+            }
+
+        }
+    }
     private void insert() {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";
 
-        Object oa[] = new Object[3];
+        Object[] oa = new Object[3];
         oa[0] = etMultiline.getText().toString().trim();
         oa[1] = etKeyword.getText().toString().trim() + btnDate.getText().toString().trim();
         oa[2] = btnDate.getText().toString().trim();
@@ -282,19 +319,4 @@ public class ContentMain extends AppCompatActivity
         db.close();
     }
 
-    private class ClipboardListener implements ClipboardManager.OnPrimaryClipChangedListener {
-        public void onPrimaryClipChanged() {
-            ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            CharSequence pasteData = "";
-            ClipData.Item item = clipBoard.getPrimaryClip().getItemAt(0);
-            pasteData = item.getText();
-            //  View view =getCurrentFocus();
-            Toast.makeText(getApplicationContext(), "copied val=" + pasteData,
-                    Toast.LENGTH_SHORT).show();
-          /*  Snackbar.make((View) getSystemService(CLIPBOARD_SERVICE), "Save with digi Notes", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_SHORT).show();
-*/
-        }
-    }
 }

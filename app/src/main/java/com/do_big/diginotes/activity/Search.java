@@ -1,12 +1,10 @@
-package com.do_big.diginotes;
+package com.do_big.diginotes.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +16,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.do_big.diginotes.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -95,6 +97,7 @@ public class Search extends AppCompatActivity {
                 final String name = s1.substring(0, s1.indexOf(" :: "));
                               Intent detailintent = new Intent(Search.this, Description.class);
                 detailintent.putExtra("des", name);
+                Toast.makeText(Search.this, "" + name, Toast.LENGTH_SHORT).show();
                 startActivity(detailintent);
 
             }
@@ -120,7 +123,7 @@ public class Search extends AppCompatActivity {
     private String show(String name) {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ? ";
-        String oa[] = new String[1];
+        String[] oa = new String[1];
         int i = 0;
         oa[i] = "%" + name + "%";
         Cursor c1 = db.rawQuery(sql, oa);
@@ -138,7 +141,7 @@ public class Search extends AppCompatActivity {
     private void delete(String name) {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "delete from gtable where keyword = ? ";
-        Object oa[] = new Object[1];
+        Object[] oa = new Object[1];
         oa[0] = name;
         db.execSQL(sql, oa);
         db.close();
@@ -150,7 +153,7 @@ public class Search extends AppCompatActivity {
     private void populateList() {
         SQLiteDatabase db = openOrCreateDatabase("diginotes", MODE_PRIVATE, null);
         String sql = "select * from gtable where keyword like ?  or date like ?";
-        String oa[] = new String[1];
+        String[] oa = new String[1];
         int i = 0;
         oa[i++] = "%" + etsearch.getText().toString().trim() + "%";
         // oa[i++]="%"+et3.getText().toString()+"%";
