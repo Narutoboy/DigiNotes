@@ -39,7 +39,7 @@ public class SplashScreen extends AppCompatActivity {
                     insert();
 
 
-                    startActivity(new Intent(SplashScreen.this, HowitWork.class));
+                    startActivity(new Intent(SplashScreen.this, WelcomeActivity.class));
                     SplashScreen.this.finish();
 
                 }
@@ -52,7 +52,7 @@ public class SplashScreen extends AppCompatActivity {
             TimerTask tt=new TimerTask() {
                 @Override
                 public void run() {
-                    Intent intent=new Intent(SplashScreen.this,ContentMain.class);
+                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
                     SplashScreen.this.finish();
                 }

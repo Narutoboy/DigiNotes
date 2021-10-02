@@ -61,7 +61,7 @@ public class Search extends AppCompatActivity {
                 ab1.setNegativeButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      Intent share=new Intent(Search.this,ContentMain.class);
+                      Intent share = new Intent(Search.this, MainActivity.class);
                         share.setAction(Intent.ACTION_SEND);
                         share.putExtra(Intent.EXTRA_TEXT,
                                show(name) );

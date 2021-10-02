@@ -22,7 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.do_big.diginotes.PrefManager;
 import com.do_big.diginotes.R;
 
-public class HowitWork extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     private TextView title;
     private ViewPager viewPager;
@@ -140,7 +140,7 @@ public class HowitWork extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(HowitWork.this, ContentMain.class));
+        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         finish();
     }
 

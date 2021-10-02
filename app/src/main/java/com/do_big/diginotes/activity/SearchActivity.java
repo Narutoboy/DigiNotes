@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.do_big.diginotes.R;
-import com.do_big.diginotes.adapter.MyAdapter;
+import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.data.Titles;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
-public class RecylerSearch extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
+public class SearchActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
     ArrayList<Titles> res;
     private EditText etsearch;
     private String data;
@@ -82,8 +82,8 @@ public class RecylerSearch extends AppCompatActivity implements RecyclerView.OnI
             res.add(new Titles(name, date));
         }
 
-        MyAdapter myAdapter = new MyAdapter(res, this);
-        mRecyclerView.setAdapter(myAdapter);
+        SearchAdapter searchAdapter = new SearchAdapter(res, this);
+        mRecyclerView.setAdapter(searchAdapter);
         db.close();
 
     }

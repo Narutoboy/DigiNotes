@@ -196,7 +196,7 @@ public class Description extends AppCompatActivity {
                 startActivity(new Intent(Description.this, SettingsActivity.class));
                 return true;
             case R.id.action_edit:
-                Intent share = new Intent(Description.this, ContentMain.class);
+                Intent share = new Intent(Description.this, MainActivity.class);
                 share.setAction(Intent.ACTION_SEND);
                 share.putExtra(Intent.EXTRA_TEXT, data);
                 share.setType("text/plain");

@@ -16,12 +16,12 @@ import com.do_big.diginotes.data.Titles;
 import java.util.ArrayList;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
     //private List<Titles> titlesList;
     Context ctx;
     private ArrayList<Titles> titlesList = new ArrayList<Titles>();
 
-    public MyAdapter(ArrayList<Titles> titlesList, Context ctx) {
+    public SearchAdapter(ArrayList<Titles> titlesList, Context ctx) {
         this.titlesList = titlesList;
         this.ctx = ctx;
     }

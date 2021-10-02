@@ -27,7 +27,7 @@
             android:label="@string/title_activity_description"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ContentMain"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_content_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.HowitWork"
+            android:name=".activity.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".activity.SettingsActivity"
@@ -51,7 +51,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".activity.RecylerSearch"
+            android:name=".activity.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

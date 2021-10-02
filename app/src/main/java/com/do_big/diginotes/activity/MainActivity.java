@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ContentMain extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     DatePickerDialog datePickerDialog;
@@ -75,7 +75,7 @@ public class ContentMain extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContentMain.this, RecylerSearch.class));
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
         Intent intent = getIntent();
@@ -110,7 +110,7 @@ public class ContentMain extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            AlertDialog.Builder b1 = new AlertDialog.Builder(ContentMain.this);
+            AlertDialog.Builder b1 = new AlertDialog.Builder(MainActivity.this);
             b1.setTitle("Exit");
             b1.setMessage("Close Digi-Note");
             b1.setPositiveButton("No", new DialogInterface.OnClickListener() {
@@ -120,7 +120,7 @@ public class ContentMain extends AppCompatActivity
             });
             b1.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface arg0, int arg1) {
-                    ContentMain.this.finish();
+                    MainActivity.this.finish();
                 }
             });
             overridePendingTransition(R.anim.right, R.anim.fadeout);
@@ -153,13 +153,13 @@ public class ContentMain extends AppCompatActivity
 
         if (id == R.id.nav_add) {
         } else if (id == R.id.nav_search) {
-            startActivity(new Intent(ContentMain.this, RecylerSearch.class));
+            startActivity(new Intent(MainActivity.this, SearchActivity.class));
             Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_edit) {
-            startActivity(new Intent(ContentMain.this, HowitWork.class));
+            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
         } else if (id == R.id.nav_delete) {
             Toast.makeText(this, "Long press ITEM for delete IT", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ContentMain.this, Search.class));
+            startActivity(new Intent(MainActivity.this, Search.class));
         } else if (id == R.id.rate_us) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.do_big.diginotes")));
             overridePendingTransition(R.anim.right, R.anim.fadeout);
@@ -183,7 +183,7 @@ public class ContentMain extends AppCompatActivity
     }
 
     public void onClick(View view) {
-        InputMethodManager inputManager = (InputMethodManager) ContentMain.this.getSystemService(INPUT_METHOD_SERVICE);
+        InputMethodManager inputManager = (InputMethodManager) MainActivity.this.getSystemService(INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(etKeyword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         int id = view.getId();
@@ -208,7 +208,7 @@ public class ContentMain extends AppCompatActivity
                 if (TextUtils.isEmpty(etKeyword.getText().toString())) {
                 etKeyword.setError("Title cannot be null");
             }
-                Intent searchIntent = new Intent(ContentMain.this, Search.class);
+                Intent searchIntent = new Intent(MainActivity.this, Search.class);
                 searchIntent.putExtra("search", etKeyword.getText().toString().trim());
                 startActivity(searchIntent);
                 Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
@@ -218,7 +218,7 @@ public class ContentMain extends AppCompatActivity
                 promptSpeechInput();
                 break;
             case R.id.btnDate:
-                final Dialog setDate = new Dialog(ContentMain.this);
+                final Dialog setDate = new Dialog(MainActivity.this);
                 setDate.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 setDate.setContentView(R.layout.date);
                 setDate.show();
@@ -307,7 +307,7 @@ public class ContentMain extends AppCompatActivity
         oa[2] = btnDate.getText().toString().trim();
         db.execSQL(sql, oa);
         db.close();
-        Toast.makeText(ContentMain.this, "Done!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Done!!!", Toast.LENGTH_SHORT).show();
 
     }
 
