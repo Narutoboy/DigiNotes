@@ -29,7 +29,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.utils.AppConstant;
-import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private ImageButton mic;
-    private AdView mAdView;
     private EditText etMultiline;
     private EditText etKeyword;
     private TextView btnDate;

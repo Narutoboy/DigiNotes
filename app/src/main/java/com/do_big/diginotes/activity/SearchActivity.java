@@ -16,9 +16,6 @@ import com.do_big.diginotes.R;
 import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.data.Titles;
 import com.do_big.diginotes.utils.AppConstant;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
@@ -26,7 +23,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
     private EditText etsearch;
     private String data;
     private RecyclerView mRecyclerView;
-    private AdView mAdView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -35,9 +31,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyler_search);
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         etsearch = findViewById(R.id.etSearch);
         etsearch.addTextChangedListener(new TextWatcher() {
             @Override
