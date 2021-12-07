@@ -5,9 +5,13 @@ package com.do_big.diginotes.utils;
  **/
 public class AppConstant {
 
-    public static final String DATABASE_NAME = "diginotes";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String PLAY_STORE_PATH = "market://details?id=com.do_big.diginotes";
     public static final String COLUMN_KEYWORD = "keyword";
     public static final String COLUMN_DATE = "date";
+
+
+
+    public static final int DB_VERSION = 1;
+    public static final String DATABASE_NAME = "diginotes_database";
 }
