@@ -51,7 +51,6 @@ public class Description extends AppCompatActivity {
             }
         });
         des = getIntent().getExtras().getString("des");
-        show(des);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,37 +81,6 @@ public class Description extends AppCompatActivity {
 
     }
 
-    private void show(String name) {
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "select * from gtable where keyword like ? ";
-        String[] oa = new String[1];
-        int i = 0;
-        oa[i] = "%" + name + "%";
-        Cursor c1 = db.rawQuery(sql, oa);
-        int in1 = c1.getColumnIndex(AppConstant.COLUMN_DESCRIPTION);
-        while (c1.moveToNext()) {
-            data = c1.getString(in1);
-            content.setText(data);
-            // Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
-        }
-        //Intent detailintent=new Intent(Search.this,)
-
-
-        db.close();
-    }
-
-    //create menu
-    private void delete(String name) {
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "delete from gtable where keyword = ? ";
-        Object[] oa = new Object[1];
-        oa[0] = name;
-        db.execSQL(sql, oa);
-        db.close();
-        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
-        // Toast.makeText(Main2Activity.this, "Done", Toast.LENGTH_SHORT).show();
-        // populateList();
-    }
 
 
     @Override
@@ -162,7 +130,7 @@ public class Description extends AppCompatActivity {
                 share.putExtra(Intent.EXTRA_TEXT, data);
                 share.setType("text/plain");
                 startActivity(share);
-                delete(des);
+
                 return true;
                 /*
             case R.id.shareApp:

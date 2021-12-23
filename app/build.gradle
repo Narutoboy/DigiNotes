@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.do_big.diginotes"
@@ -10,6 +10,9 @@ android {
         versionCode 6
         versionName "2.2.0"
         vectorDrawables.useSupportLibrary = true
+    }
+    buildFeatures{
+        viewBinding= true;
     }
     buildTypes {
         release {
@@ -32,13 +35,14 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //room db
-    implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'androidx.room:room-compiler:2.4.0-rc01'
-    implementation 'androidx.room:room-testing:2.4.0-rc01'
+    implementation 'androidx.room:room-runtime:2.2.6'
+    implementation 'androidx.room:room-compiler:2.2.6'
+    implementation 'androidx.room:room-testing:2.2.6'
     //viewmodel
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    annotationProcessor 'androidx.room:room-compiler:2.2.6'
     implementation 'androidx.cardview:cardview:1.0.0'
 }

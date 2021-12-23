@@ -1,118 +1,122 @@
 package com.do_big.diginotes.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.adapter.OnNoteItemClickListener;
 import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.data.Titles;
-import com.do_big.diginotes.utils.AppConstant;
-import java.util.ArrayList;
+import com.do_big.diginotes.databinding.ActivityRecylerSearchBinding;
+import com.do_big.diginotes.model.Note;
+import com.do_big.diginotes.model.NoteViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
-public class SearchActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SearchActivity extends AppCompatActivity implements OnNoteItemClickListener {
     private ArrayList<Titles> resList;
     private EditText etsearch;
     private String data;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private SearchAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-
+    private NoteViewModel viewModel;
+    private ActivityRecylerSearchBinding searchBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recyler_search);
-        etsearch = findViewById(R.id.etSearch);
-        etsearch.addTextChangedListener(new TextWatcher() {
+        searchBinding = ActivityRecylerSearchBinding.inflate(getLayoutInflater());
+        View searchView= searchBinding.getRoot();
+        setContentView(searchView);
+
+        viewModel=new ViewModelProvider.AndroidViewModelFactory(SearchActivity.this.getApplication()).create(NoteViewModel.class);
+        searchBinding.myRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        searchBinding.myRecyclerView.setLayoutManager(mLayoutManager);
+
+        viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                //TODO chek activity can't convert to onitem click listener
+               mAdapter = new SearchAdapter(notes,  SearchActivity.this);
+                searchBinding.myRecyclerView.setAdapter(mAdapter);
+            }
+        });
+        searchBinding.fabAddNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNotesFragment fragment= new AddNotesFragment();
+                fragment.show(getSupportFragmentManager(),"add");
+                Snackbar.make(searchBinding.getRoot(),"add notes", BaseTransientBottomBar.LENGTH_LONG).show();
+            }
+        });
+
+        searchBinding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                populateList();
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                //viewModel.get
             }
         });
-        mRecyclerView = findViewById(R.id.my_recycler_view);
-
-        //  mRecyclerView.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        populateList();
 
 
     }
 
-    private void populateList() {
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "select * from gtable where keyword like ?  or date like ?";
-        String[] oa = new String[1];
-        int i = 0;
-        oa[i++] = "%" + etsearch.getText().toString().trim() + "%";
-        // oa[i++]="%"+et3.getText().toString()+"%";
-        Cursor c1 = db.rawQuery(sql, oa);
-        int in1 = c1.getColumnIndex("keyword");
-        int in2 = c1.getColumnIndex("date");
-        resList = new ArrayList<>();
-        while (c1.moveToNext()) {
-            String name = c1.getString(in1);
-            String date = c1.getString(in2);
-            resList.add(new Titles(name, date));
+
+
+    @Override
+    public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
+
+        if(viewId== R.id.btn_fav){
+            Toast.makeText(this, "fav clicked", Toast.LENGTH_SHORT).show();
+
+        }else if (viewId == R.id.tv_edit){
+            Toast.makeText(this, "edit clicked", Toast.LENGTH_SHORT).show();
+        }else if (viewId== R.id.tv_delete){
+            NoteViewModel.delete(note);
+            Toast.makeText(this, "delete clickecd", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(SearchActivity.this, Description.class);
+            intent.putExtra("des", note.getNoteDescription());
+            this.startActivity(intent);
         }
-
-        SearchAdapter searchAdapter = new SearchAdapter(resList, this);
-        mRecyclerView.setAdapter(searchAdapter);
-        db.close();
-
-    }
-
-    private String show(String name) {
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "select * from gtable where keyword like ? ";
-        String[] oa = new String[1];
-        int i = 0;
-        oa[i] = "%" + name + "%";
-        Cursor c1 = db.rawQuery(sql, oa);
-        int in1 = c1.getColumnIndex("description");
-        while (c1.moveToNext()) {
-            data = c1.getString(in1);
-            // Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
-        }
-        //Intent detailintent=new Intent(Search.this,)
-
-
-        db.close();
-        return data;
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onNoteLongItemClick(int adapterPosition, Note note) {
+        //TODO handle long click listener
 
     }
 
     @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
+    public void onNoteDeleteClick(Note note) {
+        //delete note
+        NoteViewModel.delete(note);
     }
+
+
 }

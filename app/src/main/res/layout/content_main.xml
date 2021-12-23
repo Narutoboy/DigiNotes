@@ -94,7 +94,7 @@
             tools:layout_editor_absoluteY="458dp">
 
             <EditText
-                android:id="@+id/descript"
+                android:id="@+id/et_notes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fadeScrollbars="false"

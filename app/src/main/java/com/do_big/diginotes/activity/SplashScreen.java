@@ -37,8 +37,8 @@ public class SplashScreen extends AppCompatActivity {
                 @Override
 
                 public void run() {
-                    setupDB();
-                    insert();
+                   /* setupDB();
+                    insert();*/
 
 
                     startActivity(new Intent(SplashScreen.this, WelcomeActivity.class));

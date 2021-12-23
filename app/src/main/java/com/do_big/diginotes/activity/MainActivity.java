@@ -28,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.databinding.ActivityContentMainBinding;
 import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -49,21 +50,25 @@ public class MainActivity extends AppCompatActivity
     private TextView btnDate;
     private int day, month, year;
 
+    private ActivityContentMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.right, R.anim.fadeout);
-        setContentView(R.layout.activity_content_main);
+        binding= ActivityContentMainBinding.inflate(getLayoutInflater());
+        View layoutView  = binding.getRoot();
+        setContentView(layoutView);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mic = findViewById(R.id.btnmic);
         Button btnSave = findViewById(R.id.btnSave);
-        etMultiline = findViewById(R.id.descript);
+        etMultiline = findViewById(R.id.et_notes);
         etKeyword = findViewById(R.id.etKeyword);
         btnDate = findViewById(R.id.btnDate);
         btnDate.setText("Date:-  " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
-        setupDB();
+     //   setupDB();
         FloatingActionButton fab = findViewById(R.id.fab_search);
         fab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
         Intent intent = getIntent();

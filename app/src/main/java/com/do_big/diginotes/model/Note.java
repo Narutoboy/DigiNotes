@@ -1,7 +1,6 @@
 package com.do_big.diginotes.model;
 
 
-import androidx.annotation.ColorInt;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -20,16 +19,19 @@ public class Note {
     @ColumnInfo(name = "created_at")
     public Date createdAt;
 
-    @ColumnInfo(name = "is_done")
-    public boolean isDone;
+    @ColumnInfo(name = "is_fav")
+    public boolean isFav;
     @ColumnInfo(name ="modified_at")
     public Date modifiedAt;
 
-    public Note(String noteDescription, String noteTitle, Date createdAt, boolean isDone, Date modifiedAt) {
+    public Note() {
+    }
+
+    public Note(String noteDescription, String noteTitle, Date createdAt, boolean isFav, Date modifiedAt) {
         NoteDescription = noteDescription;
         this.noteTitle = noteTitle;
         this.createdAt = createdAt;
-        this.isDone = isDone;
+        this.isFav = isFav;
         this.modifiedAt = modifiedAt;
     }
 
@@ -57,12 +59,12 @@ public class Note {
         this.createdAt = createdAt;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public boolean isFav() {
+        return isFav;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setFav(boolean fav) {
+        isFav = fav;
     }
 
     public Date getModifiedAt() {
@@ -80,7 +82,7 @@ public class Note {
                 ", NoteDescription='" + NoteDescription + '\'' +
                 ", noteTitle='" + noteTitle + '\'' +
                 ", createdAt=" + createdAt +
-                ", isDone=" + isDone +
+                ", isFav=" + isFav +
                 ", modifiedAt=" + modifiedAt +
                 '}';
     }
