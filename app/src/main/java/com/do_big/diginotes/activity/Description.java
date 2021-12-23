@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.model.Note;
 import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,7 +51,8 @@ public class Description extends AppCompatActivity {
 
             }
         });
-        des = getIntent().getExtras().getString("des");
+        Note note = getIntent().getParcelableExtra("des");
+        content.append(note.getNoteDescription());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,7 +62,7 @@ public class Description extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                tts.speak(data, TextToSpeech.QUEUE_FLUSH, null);
+                tts.speak(note.getNoteDescription(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 

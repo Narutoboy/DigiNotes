@@ -26,30 +26,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.do_big.diginotes.R;
+import com.do_big.diginotes.adapter.OnNoteItemClickListener;
+import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.databinding.ActivityContentMainBinding;
+import com.do_big.diginotes.model.Note;
+import com.do_big.diginotes.model.NoteViewModel;
 import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , OnNoteItemClickListener {
 
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    private ImageButton mic;
-    private EditText etMultiline;
-    private EditText etKeyword;
-    private TextView btnDate;
-    private int day, month, year;
 
+    private SearchAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private NoteViewModel viewModel;
     private ActivityContentMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +68,31 @@ public class MainActivity extends AppCompatActivity
         binding= ActivityContentMainBinding.inflate(getLayoutInflater());
         View layoutView  = binding.getRoot();
         setContentView(layoutView);
+        viewModel=new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(NoteViewModel.class);
+        binding.appBarContentMain.contentMain.myRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        binding.appBarContentMain.contentMain.myRecyclerView.setLayoutManager(mLayoutManager);
+
+        viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                //TODO chek activity can't convert to onitem click listener
+                mAdapter = new SearchAdapter(notes,  MainActivity.this);
+                binding.appBarContentMain.contentMain.myRecyclerView.setAdapter(mAdapter);
+            }
+        });
+        /*binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNotesFragment fragment= new AddNotesFragment();
+                fragment.show(getSupportFragmentManager(),"add");
+                Snackbar.make(binding.getRoot(),"add notes", BaseTransientBottomBar.LENGTH_LONG).show();
+            }
+        });*/
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mic = findViewById(R.id.btnmic);
-        Button btnSave = findViewById(R.id.btnSave);
-        etMultiline = findViewById(R.id.et_notes);
-        etKeyword = findViewById(R.id.etKeyword);
-        btnDate = findViewById(R.id.btnDate);
-        btnDate.setText("Date:-  " + new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
-     //   setupDB();
+
         FloatingActionButton fab = findViewById(R.id.fab_search);
         fab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
         Intent intent = getIntent();
@@ -93,7 +117,7 @@ public class MainActivity extends AppCompatActivity
     private void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
-            etMultiline.setText(sharedText);
+            //etMultiline.setText(sharedText);
         }
     }
 
@@ -168,85 +192,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClick(View view) {
-        InputMethodManager inputManager = (InputMethodManager) MainActivity.this.getSystemService(INPUT_METHOD_SERVICE);
+/*
         inputManager.hideSoftInputFromWindow(etKeyword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        InputMethodManager inputManager = (InputMethodManager) MainActivity.this.getSystemService(INPUT_METHOD_SERVICE);
+*/
 
         int id = view.getId();
 
-        switch (id) {
-            case R.id.btnSave:
 
-                if (TextUtils.isEmpty(etMultiline.getText().toString())) {
-                    etMultiline.setError("Description cannot be null");
-                } else if (TextUtils.isEmpty(etKeyword.getText().toString())) {
-                    etKeyword.setError("Title cannot be null");
-                }/*else if (etKeyword.getText().toString().contains(" ")||etKeyword.getText().toString().contains(".")) {
-                    etKeyword.setError("there should  be no space , replace space with comma");
-                }*/ else {
-                    insert();
-                    etMultiline.setText(null);
-                    etKeyword.setText("");
-
-                }
-                break;
-          /*  case R.id.btnSearch:
-                if (TextUtils.isEmpty(etKeyword.getText().toString())) {
-                etKeyword.setError("Title cannot be null");
-            }
-                Intent searchIntent = new Intent(MainActivity.this, Search.class);
-                searchIntent.putExtra("search", etKeyword.getText().toString().trim());
-                startActivity(searchIntent);
-                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
-                break;
-*/
-            case R.id.btnmic:
-                promptSpeechInput();
-                break;
-            case R.id.btnDate:
-                final Dialog setDate = new Dialog(MainActivity.this);
-                setDate.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                setDate.setContentView(R.layout.date);
-                setDate.show();
-                DatePicker date = setDate.findViewById(R.id.datePicker);
-                // date.setMinDate(System.currentTimeMillis() - 1000);
-                Calendar calender = Calendar.getInstance();
-
-                DatePicker.OnDateChangedListener onDateChangedListener = new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
-                        day = dayOfMonth;
-                        year = years;
-                        month = monthOfYear;
-                        setDate.dismiss();
-                        btnDate.setText(day + "/" + (month + 1) + "/" + year);
-
-                    }
-                };
-
-                day = calender.get(Calendar.DAY_OF_MONTH);
-                month = calender.get(Calendar.MONTH);
-                year = calender.get(Calendar.YEAR);
-
-                date.init(year, month, day, onDateChangedListener);
-
-
-              /*  Calendar c = Calendar.getInstance();
-                day = c.get(Calendar.DAY_OF_MONTH);
-                month = c.get(Calendar.MONTH);
-                year = c.get(Calendar.YEAR);
-                datePickerDialog  = new DatePickerDialog(getApplication(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthofyear, int dayOfMonth) {
-                        monthofyear++;
-                        btnDate.setText(dayOfMonth + "/" + monthofyear + "/" + year);
-                    }
-                }, day, month, year);
-               
-                datePickerDialog.show();
-*/
-                break;
-
-        }
     }
 
     private void promptSpeechInput() {
@@ -275,7 +228,7 @@ public class MainActivity extends AppCompatActivity
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    etMultiline.setText(result.get(0));
+                   // etMultiline.setText(result.get(0));
                 }
                 break;
             }
@@ -283,26 +236,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void insert() {
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "insert into gtable(description , keyword, date) values(? , ?, ?)";
 
-        Object[] oa = new Object[3];
-        oa[0] = etMultiline.getText().toString().trim();
-        oa[1] = etKeyword.getText().toString().trim() + btnDate.getText().toString().trim();
-        oa[2] = btnDate.getText().toString().trim();
-        db.execSQL(sql, oa);
-        db.close();
-        Toast.makeText(MainActivity.this, "Done!!!", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
 
     }
-
-    private void setupDB() {
-        //deleteDatabase("mydb");
-        SQLiteDatabase db = openOrCreateDatabase(AppConstant.DATABASE_NAME, MODE_PRIVATE, null);
-        String sql = "create table if not exists gtable " + " (id INTEGER  PRIMARY KEY, description VARCHAR  NOT NULL  UNIQUE , keyword VARCHAR[50]  unique ,date VARCHAR)";
-        db.execSQL(sql);
-        db.close();
-    }
-
 }

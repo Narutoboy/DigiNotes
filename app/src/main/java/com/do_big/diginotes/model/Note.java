@@ -1,6 +1,9 @@
 package com.do_big.diginotes.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,7 +11,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName ="notes_table")
-public class Note {
+public class Note implements Parcelable {
     @ColumnInfo(name ="id")
     @PrimaryKey(autoGenerate = true)
     public long noteId;
@@ -34,6 +37,26 @@ public class Note {
         this.isFav = isFav;
         this.modifiedAt = modifiedAt;
     }
+
+    protected Note(Parcel in) {
+        noteId = in.readLong();
+        NoteDescription = in.readString();
+        noteTitle = in.readString();
+
+        isFav = in.readByte() != 0;
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     public String getNoteDescription() {
         return NoteDescription;
@@ -85,5 +108,18 @@ public class Note {
                 ", isFav=" + isFav +
                 ", modifiedAt=" + modifiedAt +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(noteId);
+        dest.writeString(NoteDescription);
+        dest.writeString(noteTitle);
+        dest.writeByte((byte) (isFav ? 1 : 0));
     }
 }

@@ -45,6 +45,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.mTitleText.setText("" + note.getNoteTitle());
 
         holder.mCreatedAtText.append(Utils.formateDate(note.createdAt));
+        if(note.isFav){
+            holder.mFavImage.setImageResource(android.R.drawable.star_big_on);
+        }else {
+            holder.mFavImage.setImageResource(android.R.drawable.star_big_off);
+        }
         if (position % 2 == 1) {
             holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         } else {
@@ -78,6 +83,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             view.setOnLongClickListener(this);
             this.onNotesRowItemClick = onNoteItemClickListener;
 
+
             //   popText = (TextView) view.findViewById(R.id.pop);
         }
 
@@ -104,7 +110,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         public boolean onLongClick(View v) {
 
             groupMoreOptions.setVisibility(groupMoreOptions.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            onNotesRowItemClick.onNoteLongItemClick(getAbsoluteAdapterPosition(), notesList.get(getAdapterPosition()));
             return true;
         }
     }

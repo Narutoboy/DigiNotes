@@ -60,6 +60,8 @@ private FragmentAddNotesBinding binding;
                 String title =etNote.substring(0, etNote.indexOf(' '));
                 NoteViewModel.insert(new Note(etNote,title,createdAt,false,null));
                 Toast.makeText(getActivity(), "Note saved", Toast.LENGTH_SHORT).show();
+                binding.etNotes.setText("");
+
             }
 
         });

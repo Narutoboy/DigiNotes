@@ -29,13 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements OnNoteItemClickListener {
-    private ArrayList<Titles> resList;
-    private EditText etsearch;
-    private String data;
-    private RecyclerView mRecyclerView;
     private SearchAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
     private NoteViewModel viewModel;
     private ActivityRecylerSearchBinding searchBinding;
     @Override
@@ -93,30 +88,30 @@ public class SearchActivity extends AppCompatActivity implements OnNoteItemClick
 
         if(viewId== R.id.btn_fav){
             Toast.makeText(this, "fav clicked", Toast.LENGTH_SHORT).show();
+            if (note.isFav) {
+                note.setFav(false);
+            } else {
+                note.setFav(true);
+            }
+
+            NoteViewModel.update(note);
 
         }else if (viewId == R.id.tv_edit){
             Toast.makeText(this, "edit clicked", Toast.LENGTH_SHORT).show();
+            viewModel.setSelectedNote(note);
+            viewModel.setEdit(true);
+
         }else if (viewId== R.id.tv_delete){
             NoteViewModel.delete(note);
             Toast.makeText(this, "delete clickecd", Toast.LENGTH_SHORT).show();
         }else{
             Intent intent = new Intent(SearchActivity.this, Description.class);
-            intent.putExtra("des", note.getNoteDescription());
+            intent.putExtra("des", note);
             this.startActivity(intent);
         }
     }
 
-    @Override
-    public void onNoteLongItemClick(int adapterPosition, Note note) {
-        //TODO handle long click listener
 
-    }
-
-    @Override
-    public void onNoteDeleteClick(Note note) {
-        //delete note
-        NoteViewModel.delete(note);
-    }
 
 
 }
