@@ -1,23 +1,13 @@
 package com.do_big.diginotes.activity;
 
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,21 +27,17 @@ import com.do_big.diginotes.adapter.SearchAdapter;
 import com.do_big.diginotes.databinding.ActivityContentMainBinding;
 import com.do_big.diginotes.model.Note;
 import com.do_big.diginotes.model.NoteViewModel;
+import com.do_big.diginotes.model.SharedViewModel;
 import com.do_big.diginotes.utils.AppConstant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , OnNoteItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnNoteItemClickListener {
 
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -59,50 +45,41 @@ public class MainActivity extends AppCompatActivity
     private SearchAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private NoteViewModel viewModel;
+    private SharedViewModel sharedViewModel;
     private ActivityContentMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.right, R.anim.fadeout);
-        binding= ActivityContentMainBinding.inflate(getLayoutInflater());
-        View layoutView  = binding.getRoot();
+        binding = ActivityContentMainBinding.inflate(getLayoutInflater());
+        View layoutView = binding.getRoot();
         setContentView(layoutView);
-        viewModel=new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(NoteViewModel.class);
+        viewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(NoteViewModel.class);
+        sharedViewModel = new ViewModelProvider(MainActivity.this).get(SharedViewModel.class);
         binding.appBarContentMain.contentMain.myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         binding.appBarContentMain.contentMain.myRecyclerView.setLayoutManager(mLayoutManager);
 
-        viewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
+        NoteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
                 //TODO chek activity can't convert to onitem click listener
-                mAdapter = new SearchAdapter(notes,  MainActivity.this);
+                mAdapter = new SearchAdapter(notes, MainActivity.this);
                 binding.appBarContentMain.contentMain.myRecyclerView.setAdapter(mAdapter);
             }
         });
-        /*binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.appBarContentMain.contentMain.fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNotesFragment fragment= new AddNotesFragment();
-                fragment.show(getSupportFragmentManager(),"add");
-                Snackbar.make(binding.getRoot(),"add notes", BaseTransientBottomBar.LENGTH_LONG).show();
+                showBottomSheetDialog();
             }
-        });*/
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab_search);
-        fab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                handleSendText(intent); // Handle text being sent
-            }
-        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -114,11 +91,29 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void showBottomSheetDialog() {
+        AddNotesFragment fragment= new AddNotesFragment();
+        fragment.show(getSupportFragmentManager(),"add");
+    }
+
     private void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             //etMultiline.setText(sharedText);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+       sharedViewModel.getVoiceInput().observe(this, new Observer<Boolean>() {
+           @Override
+           public void onChanged(Boolean aBoolean) {
+               promptSpeechInput();
+               sharedViewModel.setVoiceInput(false);
+           }
+       });
     }
 
     @Override
@@ -133,7 +128,7 @@ public class MainActivity extends AppCompatActivity
             b1.setPositiveButton("No", (arg0, arg1) -> arg0.cancel());
             b1.setNegativeButton("Yes", (arg0, arg1) -> MainActivity.this.finish());
             overridePendingTransition(R.anim.right, R.anim.fadeout);
-            b1.show();
+              b1.show();
 
         }
     }
@@ -163,11 +158,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_add) {
         } else if (id == R.id.nav_search) {
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
-            Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.nav_edit) {
             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
         } else if (id == R.id.nav_delete) {
-            Toast.makeText(this, "Long press ITEM for delete IT", Toast.LENGTH_SHORT).show();
+
             startActivity(new Intent(MainActivity.this, Search.class));
         } else if (id == R.id.rate_us) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
@@ -202,7 +197,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void promptSpeechInput() {
+    public void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -228,7 +223,9 @@ public class MainActivity extends AppCompatActivity
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                   // etMultiline.setText(result.get(0));
+                        sharedViewModel.setVoiceInputNoteDescription(result.get(0));
+                        showBottomSheetDialog();
+                    // etMultiline.setText(result.get(0));
                 }
                 break;
             }
@@ -239,6 +236,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
+        if(viewId== R.id.btn_fav){
+            //TODO add lottie animation
+            if (note.isFav) {
+                note.setFav(false);
+            } else {
+                note.setFav(true);
+            }
 
+            NoteViewModel.update(note);
+
+        }else if (viewId == R.id.tv_edit){
+            sharedViewModel.setSelectedItem(note);
+            sharedViewModel.setEdit(true);
+            showBottomSheetDialog();
+
+        }else if (viewId== R.id.tv_delete){
+            NoteViewModel.delete(note);
+        }else{
+            //on NoteItem clicked
+            Intent intent = new Intent(MainActivity.this, Description.class);
+            intent.putExtra(AppConstant.ITEM_CLICKED_PARCEL, note);
+            this.startActivity(intent);
+        }
     }
 }

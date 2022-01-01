@@ -197,5 +197,6 @@
     <string name="date">Date</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_text_field_cannot_empty">Field can not be empty</string>
 
 </resources>

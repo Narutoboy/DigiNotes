@@ -14,16 +14,6 @@ import java.util.List;
 public class NoteViewModel  extends AndroidViewModel {
 
     public static NoteRepository respository;
-    private final MutableLiveData<Note> selectedNote = new MutableLiveData<>();
-    private Boolean isEdit;
-
-    public Boolean getEdit() {
-        return isEdit;
-    }
-
-    public void setEdit(Boolean edit) {
-        isEdit = edit;
-    }
 
     public static LiveData<List<Note>> allNotes;
     public NoteViewModel(@NonNull Application application) {
@@ -41,8 +31,5 @@ public class NoteViewModel  extends AndroidViewModel {
         respository.delete(note);
     }
 
-    public void setSelectedNote(Note note){
-        selectedNote.setValue(note);
-    }
 
 }

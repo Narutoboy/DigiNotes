@@ -50,10 +50,12 @@ public class Description extends AppCompatActivity {
                 tts.setLanguage(Locale.UK);
 
             }
-        });
-        Note note = getIntent().getParcelableExtra("des");
+        });Note note = getIntent().getParcelableExtra(AppConstant.ITEM_CLICKED_PARCEL);
         content.append(note.getNoteDescription());
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if(note.getNoteTitle()!=null){
+            toolbar.setTitle(note.getNoteTitle());
+        }
         setSupportActionBar(toolbar);
 
         final FloatingActionButton fab = findViewById(R.id.fab);

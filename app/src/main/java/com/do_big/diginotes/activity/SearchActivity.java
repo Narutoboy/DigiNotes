@@ -86,29 +86,7 @@ public class SearchActivity extends AppCompatActivity implements OnNoteItemClick
     @Override
     public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
 
-        if(viewId== R.id.btn_fav){
-            Toast.makeText(this, "fav clicked", Toast.LENGTH_SHORT).show();
-            if (note.isFav) {
-                note.setFav(false);
-            } else {
-                note.setFav(true);
-            }
 
-            NoteViewModel.update(note);
-
-        }else if (viewId == R.id.tv_edit){
-            Toast.makeText(this, "edit clicked", Toast.LENGTH_SHORT).show();
-            viewModel.setSelectedNote(note);
-            viewModel.setEdit(true);
-
-        }else if (viewId== R.id.tv_delete){
-            NoteViewModel.delete(note);
-            Toast.makeText(this, "delete clickecd", Toast.LENGTH_SHORT).show();
-        }else{
-            Intent intent = new Intent(SearchActivity.this, Description.class);
-            intent.putExtra("des", note);
-            this.startActivity(intent);
-        }
     }
 
 

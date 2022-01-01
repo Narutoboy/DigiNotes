@@ -14,4 +14,5 @@ public class AppConstant {
 
     public static final int DB_VERSION = 1;
     public static final String DATABASE_NAME = "diginotes_database";
+    public static final String ITEM_CLICKED_PARCEL = "des";
 }
