@@ -29,7 +29,6 @@ import com.do_big.diginotes.model.Note;
 import com.do_big.diginotes.model.NoteViewModel;
 import com.do_big.diginotes.model.SharedViewModel;
 import com.do_big.diginotes.utils.AppConstant;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -155,16 +154,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_add) {
-        } else if (id == R.id.nav_search) {
-            startActivity(new Intent(MainActivity.this, SearchActivity.class));
-
-        } else if (id == R.id.nav_edit) {
+       if (id == R.id.nav_how_it_work) {
             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-        } else if (id == R.id.nav_delete) {
-
-            startActivity(new Intent(MainActivity.this, Search.class));
-        } else if (id == R.id.rate_us) {
+        }  else if (id == R.id.rate_us) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
             overridePendingTransition(R.anim.right, R.anim.fadeout);
             return true;
