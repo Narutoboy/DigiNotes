@@ -3,24 +3,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_edit"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_how_it_work"
+            android:icon="@drawable/ic_how_it_work_24"
 
             android:title="@string/how_it_work" />
-        <item
-            android:id="@+id/nav_add"
-            android:icon="@android:drawable/ic_input_add"
-            android:title="@string/add" />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@android:drawable/ic_menu_search"
-            android:title="@string/search" />
 
-        <item
-            android:id="@+id/nav_delete"
-
-            android:icon="@android:drawable/ic_menu_delete"
-            android:title="@string/delete_edit" />
     </group>
 
     <item android:title="@string/communicate">

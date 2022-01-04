@@ -60,17 +60,17 @@ private FragmentAddNotesBinding binding;
         super.onViewCreated(view, savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         binding.tvCalendar.append(new SimpleDateFormat("E, dd/MM/yyyy").format(Calendar.getInstance().getTime()) );
-        binding.btnMic.setOnClickListener(btnMicClick ->{
+       /* binding.btnMic.setOnClickListener(btnMicClick ->{
             Toast.makeText(getActivity(), "mic clicked", Toast.LENGTH_SHORT).show();
             sharedViewModel.setVoiceInput(true);
             dismiss();
             //invoke voice input and return back to fragment
 
-        });
+        });*/
         binding.btnSave.setOnClickListener(v -> {
             //for update notes
             String etNote= binding.etNotes.getText().toString();
-            if(TextUtils.isEmpty(etNote)) {
+            if(!TextUtils.isEmpty(etNote)) {
                 if (isEdit) {
                     Note updateNote = sharedViewModel.getSelectedItem().getValue();
                     updateNote.setNoteDescription(etNote);
@@ -84,7 +84,7 @@ private FragmentAddNotesBinding binding;
                     String title = etNote.substring(0, etNote.indexOf(' '));
                     NoteViewModel.insert(new Note(etNote, title, createdAt, false, null));
                     Snackbar.make(getActivity().findViewById(android.R.id.content), "Note Saved", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    binding.etNotes.setText("");
+                    //binding.etNotes.setText("");
                     dismiss();
                 }
             }else {
@@ -101,13 +101,6 @@ private FragmentAddNotesBinding binding;
             isEdit=sharedViewModel.getEdit();
             binding.etNotes.setText(""+sharedViewModel.getSelectedItem().getValue().getNoteDescription());
         }
-
-        sharedViewModel.getVoiceInputDescription().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.etNotes.setText(""+s);
-            }
-        });
 
     }
 

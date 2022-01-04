@@ -15,6 +15,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.do_big.diginotes.data.NoteDao;
 import com.do_big.diginotes.model.Note;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,6 +39,20 @@ public abstract class NoteRoomDataBase extends RoomDatabase {
                 public void run() {
                     NoteDao noteDao = INSTANCE.noteDao();
                     noteDao.deleteAll();
+                    String etNote = "Some of Digi Note feature :-\n" +
+                            "1. Add note either via share or write or Voice .\n" +
+                            "2. Search notes (Title or Date ) . \n" +
+                            "3. Having Setting so it will easy to focus on learning .\n" +
+                            "4. Edit TextSize and Night Mode .\n" +
+                            "5. Stay with us lot of New feature and on the way .\n" +
+                            "Happy Learning :)";
+                    String title = "How to Use ";
+
+                    Date createdAt = Calendar.getInstance().getTime();
+                    Note howToUseNote =  new Note(etNote, title, createdAt, true, null);
+
+                    noteDao.insertNote(howToUseNote);
+
                 }
             });
         }

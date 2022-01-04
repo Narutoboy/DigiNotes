@@ -1,10 +1,13 @@
 package com.do_big.diginotes.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +56,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
         }
+
+        setAnimation(holder.itemView);
+    }
+    private void  setAnimation(View view){
+        Animation slideAnimation= AnimationUtils.loadAnimation((Context) onNoteItemClickListener, android.R.anim.slide_in_left);
+        view.startAnimation(slideAnimation);
+
+
     }
 
     @Override
