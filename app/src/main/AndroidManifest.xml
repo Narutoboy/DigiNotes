@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -21,18 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:exported="false"
-            android:name=".activity.Search"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:exported="false"
             android:name=".activity.Description"
+            android:exported="false"
             android:label="@string/title_activity_description"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:exported="false"
             android:name=".activity.MainActivity"
+            android:exported="false"
             android:label="@string/title_activity_content_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -45,23 +40,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:exported="false"
             android:name=".activity.WelcomeActivity"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
-            android:exported="false"
             android:name=".activity.SettingsActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:exported="false"
-            android:name=".activity.SearchActivity"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

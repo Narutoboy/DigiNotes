@@ -84,7 +84,7 @@ private FragmentAddNotesBinding binding;
                     String title = etNote.substring(0, etNote.indexOf(' '));
                     NoteViewModel.insert(new Note(etNote, title, createdAt, false, null));
                     Snackbar.make(getActivity().findViewById(android.R.id.content), "Note Saved", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    binding.etNotes.setText("");
+                    //binding.etNotes.setText("");
                     dismiss();
                 }
             }else {
