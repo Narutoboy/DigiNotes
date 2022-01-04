@@ -70,7 +70,7 @@ private FragmentAddNotesBinding binding;
         binding.btnSave.setOnClickListener(v -> {
             //for update notes
             String etNote= binding.etNotes.getText().toString();
-            if(TextUtils.isEmpty(etNote)) {
+            if(!TextUtils.isEmpty(etNote)) {
                 if (isEdit) {
                     Note updateNote = sharedViewModel.getSelectedItem().getValue();
                     updateNote.setNoteDescription(etNote);
@@ -101,13 +101,6 @@ private FragmentAddNotesBinding binding;
             isEdit=sharedViewModel.getEdit();
             binding.etNotes.setText(""+sharedViewModel.getSelectedItem().getValue().getNoteDescription());
         }
-
-        sharedViewModel.getVoiceInputDescription().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.etNotes.setText(""+s);
-            }
-        });
 
     }
 
