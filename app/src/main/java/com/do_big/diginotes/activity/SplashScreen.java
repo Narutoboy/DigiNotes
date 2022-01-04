@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.do_big.diginotes.BuildConfig;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.utils.PrefManager;
 
@@ -24,10 +25,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        overridePendingTransition(R.anim.left, R.anim.fadeout);
-        TextView title = findViewById(R.id.textView_title);
-        Animation animation = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fadein);
-        title.startAnimation(animation);
+        TextView appVersionTV= findViewById(R.id.tv_version);
+        appVersionTV.setText("Version : "+BuildConfig.VERSION_NAME);
         PrefManager prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
             TimerTask tt = new TimerTask() {

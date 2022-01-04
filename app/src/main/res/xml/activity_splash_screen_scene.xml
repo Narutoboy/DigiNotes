@@ -37,6 +37,14 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/textView_title" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.498"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            motion:layout_constraintTop_toBottomOf="@+id/textView_subTitle" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -54,5 +62,16 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintVertical_bias="0.42000002"
             motion:layout_constraintVertical_chainStyle="packed" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="16dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/textView_subTitle"
+            android:id="@+id/textView"
+            motion:layout_constraintVertical_bias="0.526"
+            motion:layout_constraintHorizontal_bias="0.498" />
     </ConstraintSet>
 </MotionScene>

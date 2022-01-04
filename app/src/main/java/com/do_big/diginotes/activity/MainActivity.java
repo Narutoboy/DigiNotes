@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.do_big.diginotes.BuildConfig;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.adapter.OnNoteItemClickListener;
 import com.do_big.diginotes.adapter.SearchAdapter;
