@@ -12,11 +12,13 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-
-            app:srcCompat="@android:drawable/star_big_on" />
+            app:lottie_fileName="Easy_Learning.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
 
         <TextView
             android:layout_width="wrap_content"
