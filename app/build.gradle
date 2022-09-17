@@ -7,8 +7,8 @@ android {
         applicationId "com.do_big.diginotes"
         minSdkVersion 26
         targetSdkVersion 30
-        versionCode 7
-        versionName "2.3.0"
+        versionCode 8
+        versionName "2.4.0"
         vectorDrawables.useSupportLibrary = true
     }
     buildFeatures{
@@ -45,4 +45,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     annotationProcessor 'androidx.room:room-compiler:2.2.6'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.airbnb.android:lottie:5.0.3'
 }
