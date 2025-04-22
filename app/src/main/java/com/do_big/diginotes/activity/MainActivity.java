@@ -22,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.do_big.diginotes.BuildConfig;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.adapter.OnNoteItemClickListener;
 import com.do_big.diginotes.adapter.SearchAdapter;
