@@ -2,13 +2,9 @@ package com.do_big.diginotes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.do_big.diginotes.BuildConfig;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.utils.PrefManager;
 
@@ -25,8 +21,6 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        TextView appVersionTV= findViewById(R.id.tv_version);
-        appVersionTV.setText("Version : "+BuildConfig.VERSION_NAME);
         PrefManager prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {
             TimerTask tt = new TimerTask() {
