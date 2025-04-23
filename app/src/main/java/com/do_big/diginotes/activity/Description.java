@@ -1,9 +1,6 @@
 package com.do_big.diginotes.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -91,7 +87,7 @@ public class Description extends AppCompatActivity {
     protected void onResume() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String textsize = settings.getString("TextSize", "18");
-        Log.d("textSize", "" + textsize);
+        Log.d("textSize", textsize);
         content.setTextSize(Float.parseFloat(textsize));
         boolean nightmode = settings.getBoolean("nightMode", false);
         if (nightmode) {
@@ -116,7 +112,7 @@ public class Description extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case R.id.action_share:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -136,7 +132,7 @@ public class Description extends AppCompatActivity {
                 startActivity(share);
 
                 return true;
-                /*
+                *//*
             case R.id.shareApp:
                 Intent shareintent = new Intent();
                 shareintent.setAction(Intent.ACTION_SEND);
@@ -144,9 +140,10 @@ public class Description extends AppCompatActivity {
                         "Digi-Notes Study smart!! https://play.google.com/store/apps/details?id=com.bmiEvaluator");
                 shareintent.setType("text/plain");
                 startActivity(shareintent);
-                return true;*/
+                return true;*//*
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 }

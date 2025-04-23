@@ -94,7 +94,6 @@
 
         android:background="@drawable/green"
         android:elevation="15dp"
-        android:onClick="onClick"
         android:text="Save"
         android:textAlignment="center"
         android:textColor="@color/white"

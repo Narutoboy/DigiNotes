@@ -25,7 +25,7 @@
             android:label="@string/title_activity_description"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_content_main"
             android:theme="@style/AppTheme.NoActionBar"

@@ -8,7 +8,6 @@ import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -36,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnNoteItemClickListener {
 
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         View layoutView = binding.getRoot();
         setContentView(layoutView);
         viewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(NoteViewModel.class);
-        sharedViewModel = new ViewModelProvider(MainActivity.this).get(SharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(HomeActivity.this).get(SharedViewModel.class);
         binding.appBarContentMain.contentMain.myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         binding.appBarContentMain.contentMain.myRecyclerView.setLayoutManager(mLayoutManager);
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChanged(List<Note> notes) {
                 //TODO chek activity can't convert to onitem click listener
-                mAdapter = new SearchAdapter(notes, MainActivity.this);
+                mAdapter = new SearchAdapter(notes, HomeActivity.this);
                 binding.appBarContentMain.contentMain.myRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -95,12 +94,7 @@ public class MainActivity extends AppCompatActivity
         fragment.show(getSupportFragmentManager(),"add");
     }
 
-    private void handleSendText(Intent intent) {
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        if (sharedText != null) {
-            //etMultiline.setText(sharedText);
-        }
-    }
+
 
     @Override
     protected void onResume() {
@@ -121,11 +115,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            AlertDialog.Builder b1 = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder b1 = new AlertDialog.Builder(HomeActivity.this);
             b1.setTitle("Exit");
             b1.setMessage("Close Digi-Note");
             b1.setPositiveButton("No", (arg0, arg1) -> arg0.cancel());
-            b1.setNegativeButton("Yes", (arg0, arg1) -> MainActivity.this.finish());
+            b1.setNegativeButton("Yes", (arg0, arg1) -> HomeActivity.this.finish());
             overridePendingTransition(R.anim.right, R.anim.fadeout);
               b1.show();
 
@@ -134,14 +128,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.content_main, menu);
+        getMenuInflater().inflate(R.menu.menu_home_screen, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_action_exit) {
             onBackPressed();
             return true;
         }
@@ -155,7 +149,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
        if (id == R.id.nav_how_it_work) {
-            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+           startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
         }  else if (id == R.id.rate_us) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
             overridePendingTransition(R.anim.right, R.anim.fadeout);
@@ -178,16 +172,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void onClick(View view) {
-/*
-        inputManager.hideSoftInputFromWindow(etKeyword.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        InputMethodManager inputManager = (InputMethodManager) MainActivity.this.getSystemService(INPUT_METHOD_SERVICE);
-*/
-
-        int id = view.getId();
-
-
-    }
 
     public void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -230,11 +214,7 @@ public class MainActivity extends AppCompatActivity
     public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
         if(viewId== R.id.btn_fav){
             //TODO add lottie animation
-            if (note.isFav) {
-                note.setFav(false);
-            } else {
-                note.setFav(true);
-            }
+            note.setFav(!note.isFav);
 
             NoteViewModel.update(note);
 
@@ -247,7 +227,7 @@ public class MainActivity extends AppCompatActivity
             NoteViewModel.delete(note);
         }else{
             //on NoteItem clicked
-            Intent intent = new Intent(MainActivity.this, Description.class);
+            Intent intent = new Intent(HomeActivity.this, Description.class);
             intent.putExtra(AppConstant.ITEM_CLICKED_PARCEL, note);
             this.startActivity(intent);
         }

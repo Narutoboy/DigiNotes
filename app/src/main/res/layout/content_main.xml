@@ -7,7 +7,7 @@
 
     android:background="@drawable/sunback"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.do_big.diginotes.activity.MainActivity"
+    tools:context="com.do_big.diginotes.activity.HomeActivity"
     tools:layout_editor_absoluteY="89dp"
     tools:showIn="@layout/app_bar_content_main">
 
