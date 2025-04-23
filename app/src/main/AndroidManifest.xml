@@ -11,7 +11,7 @@
         <activity
             android:name=".activity.SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -41,7 +41,7 @@
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".activity.SettingsActivity"
             android:exported="false"
