@@ -1,5 +1,6 @@
 package com.do_big.diginotes.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,7 +35,7 @@ public class Description extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.right, R.anim.fadeout);
-        setContentView(R.layout.activity_description2);
+        setContentView(R.layout.activity_description);
         content = findViewById(R.id.content);
         back = findViewById(R.id.background);
 
@@ -46,23 +46,18 @@ public class Description extends AppCompatActivity {
                 tts.setLanguage(Locale.UK);
 
             }
-        });Note note = getIntent().getParcelableExtra(AppConstant.ITEM_CLICKED_PARCEL);
+        });
+        Note note = getIntent().getParcelableExtra(AppConstant.ITEM_CLICKED_PARCEL);
         content.append(note.getNoteDescription());
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if(note.getNoteTitle()!=null){
+        if (note.getNoteTitle() != null) {
             toolbar.setTitle(note.getNoteTitle());
         }
         setSupportActionBar(toolbar);
 
         final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setImageResource(android.R.drawable.ic_lock_silent_mode_off);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                tts.speak(note.getNoteDescription(), TextToSpeech.QUEUE_FLUSH, null);
-            }
-        });
+        fab.setOnClickListener(view -> tts.speak(note.getNoteDescription(), TextToSpeech.QUEUE_FLUSH, null));
 
     }
 
@@ -80,7 +75,6 @@ public class Description extends AppCompatActivity {
 
 
     }
-
 
 
     @Override
@@ -112,38 +106,30 @@ public class Description extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*switch (item.getItemId()) {
-            case R.id.action_share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        content.getText().toString() + "\n\tDigiNote");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(Description.this, SettingsActivity.class));
-                return true;
-            case R.id.action_edit:
-                Intent share = new Intent(Description.this, MainActivity.class);
-                share.setAction(Intent.ACTION_SEND);
-                share.putExtra(Intent.EXTRA_TEXT, data);
-                share.setType("text/plain");
-                startActivity(share);
 
-                return true;
-                *//*
-            case R.id.shareApp:
-                Intent shareintent = new Intent();
-                shareintent.setAction(Intent.ACTION_SEND);
-                shareintent.putExtra(Intent.EXTRA_TEXT,
-                        "Digi-Notes Study smart!! https://play.google.com/store/apps/details?id=com.bmiEvaluator");
-                shareintent.setType("text/plain");
-                startActivity(shareintent);
-                return true;*//*
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
-        return super.onOptionsItemSelected(item);
+        MenuItem i = item;
+        if (i.getItemId() == R.id.action_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    content.getText().toString() + "\n\tDigiNote");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+            return true;
+        } else if (i.getItemId() == R.id.action_edit) {
+            Intent share = new Intent(Description.this, HomeActivity.class);
+            share.setAction(Intent.ACTION_SEND);
+            share.putExtra(Intent.EXTRA_TEXT, data);
+            share.setType("text/plain");
+            startActivity(share);
+            return true;
+        } else if (i.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(Description.this, SettingsActivity.class));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+
+
     }
 }
