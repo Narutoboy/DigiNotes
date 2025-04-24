@@ -25,14 +25,49 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/digi_notes"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/black" />
+        android:textColor="@android:color/white"
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView_subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/smart_way_of_learning"
-        android:textColor="@color/black" />
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_share"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_menu_share"
+            android:text="Share"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:strokeColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_rate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_baseline_star_24"
+            android:text="Rate US"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:strokeColor="@android:color/white" />
+    </LinearLayout>
 </LinearLayout>
