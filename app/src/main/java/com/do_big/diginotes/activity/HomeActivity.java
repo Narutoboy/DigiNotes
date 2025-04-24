@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.do_big.diginotes.R;
 import com.do_big.diginotes.adapter.OnNoteItemClickListener;
 import com.do_big.diginotes.adapter.SearchAdapter;
-import com.do_big.diginotes.databinding.ActivityContentMainBinding;
+import com.do_big.diginotes.databinding.ActivityHomeBinding;
 import com.do_big.diginotes.model.Note;
 import com.do_big.diginotes.model.NoteViewModel;
 import com.do_big.diginotes.model.SharedViewModel;
@@ -45,13 +45,13 @@ public class HomeActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private NoteViewModel viewModel;
     private SharedViewModel sharedViewModel;
-    private ActivityContentMainBinding binding;
+    private ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        binding = ActivityContentMainBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         View layoutView = binding.getRoot();
         setContentView(layoutView);
         viewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(NoteViewModel.class);
