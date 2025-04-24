@@ -75,8 +75,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_home);
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

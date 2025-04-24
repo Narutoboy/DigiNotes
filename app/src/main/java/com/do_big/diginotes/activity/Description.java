@@ -49,7 +49,7 @@ public class Description extends AppCompatActivity {
         });
         Note note = getIntent().getParcelableExtra(AppConstant.ITEM_CLICKED_PARCEL);
         content.append(note.getNoteDescription());
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_description);
         if (note.getNoteTitle() != null) {
             toolbar.setTitle(note.getNoteTitle());
         }
