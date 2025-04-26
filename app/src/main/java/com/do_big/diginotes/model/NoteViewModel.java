@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.do_big.diginotes.data.NoteRepository;
 
@@ -19,7 +18,7 @@ public class NoteViewModel  extends AndroidViewModel {
     public NoteViewModel(@NonNull Application application) {
         super(application);
         respository= new NoteRepository(application);
-        allNotes=respository.getAllNotes();
+        allNotes = respository.allNotes;
     }
     public static LiveData<List<Note>> getAllNotes(){return allNotes;}
     public static  void insert(Note note){

@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_how_it_work"
-            android:icon="@drawable/ic_how_it_work_24"
+    <item
+        android:id="@+id/nav_how_it_work"
+        android:icon="@drawable/ic_how_it_work_24"
 
-            android:title="@string/how_it_work" />
+        android:title="@string/how_it_work" />
 
-    </group>
-
-    <item android:title="@string/communicate">
-        <menu>
-            <item
-                android:id="@+id/rate_us"
-                android:icon="@android:drawable/btn_star_big_on"
-                android:title="@string/rate_us" />
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/share" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/setting_icon"
+        android:title="Settings" />
 
 </menu>

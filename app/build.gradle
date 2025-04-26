@@ -1,18 +1,23 @@
-apply plugin: 'com.android.application'
+plugins{
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '30.0.2'
+    namespace 'com.do_big.diginotes'
+    compileSdkVersion 34
     defaultConfig {
-        applicationId "com.do_big.diginotes"
+        applicationId 'com.do_big.diginotes'
         minSdkVersion 26
-        targetSdkVersion 30
-        versionCode 7
-        versionName "2.3.0"
+        targetSdkVersion 34
+        versionCode 8
+        versionName "2.4.0"
         vectorDrawables.useSupportLibrary = true
     }
     buildFeatures{
-        viewBinding= true;
+        viewBinding= true
     }
     buildTypes {
         release {
@@ -21,28 +26,46 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17 // Or your chosen version
+        targetCompatibility = JavaVersion.VERSION_17 // Or your chosen version
+    }
+
+    kotlinOptions {
+        jvmTarget = "17" // Or your chosen version
+    }
+
+    // Configure the JVM toolchain
+    compileSdk = 34
+    namespace = "com.do_big.diginotes"
+
+    kotlin {
+        jvmToolchain(17) // Or your chosen version
+    }
 
 
 }
 
 dependencies {
+    //material
+    implementation("com.google.android.material:material:1.11.0")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //room db
-    implementation 'androidx.room:room-runtime:2.2.6'
-    implementation 'androidx.room:room-compiler:2.2.6'
-    implementation 'androidx.room:room-testing:2.2.6'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+
     //viewmodel
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    annotationProcessor 'androidx.room:room-compiler:2.2.6'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.airbnb.android:lottie:5.0.3'
 }

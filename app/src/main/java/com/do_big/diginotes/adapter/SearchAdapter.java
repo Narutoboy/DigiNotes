@@ -43,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         Note note = notesList.get(position);
 
-        holder.mTitleText.setText("" + note.getNoteTitle());
+        holder.mTitleText.setText(note.noteTitle);
 
         holder.mCreatedAtText.append(Utils.formateDate(note.createdAt));
         if (note.isFav) {
@@ -102,7 +102,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
 
             Note currentNote = notesList.get(getAdapterPosition());
-            Log.d("recyclerview Adapter", "onClick: item " + currentNote.getNoteTitle());
+            Log.d("recyclerview Adapter", "onClick: item " + currentNote.noteTitle);
             onNotesRowItemClick.onNoteItemClick(getAdapterPosition(), currentNote, id);
         }
 

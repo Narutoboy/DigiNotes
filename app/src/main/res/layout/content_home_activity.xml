@@ -4,12 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@drawable/sunback"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.do_big.diginotes.activity.MainActivity"
-    tools:layout_editor_absoluteY="89dp"
-    tools:showIn="@layout/app_bar_content_main">
+    tools:context="com.do_big.diginotes.activity.HomeActivity"
+    tools:showIn="@layout/app_bar_home_activity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
@@ -33,11 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
 
 
