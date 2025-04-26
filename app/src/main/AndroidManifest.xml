@@ -28,6 +28,7 @@
             android:name=".activity.HomeActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
