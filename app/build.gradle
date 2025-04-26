@@ -47,10 +47,9 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.6.1'
 
     //viewmodel
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.airbnb.android:lottie:5.0.3'
 }
