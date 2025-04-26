@@ -6,13 +6,10 @@
         android:icon="@drawable/ic_how_it_work_24"
 
         android:title="@string/how_it_work" />
+
     <item
-        android:id="@+id/rate_us"
-        android:icon="@android:drawable/btn_star_big_on"
-        android:title="@string/rate_us" />
-    <item
-        android:id="@+id/nav_share"
-        android:icon="@drawable/ic_menu_share"
-        android:title="@string/share" />
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/setting_icon"
+        android:title="Settings" />
 
 </menu>

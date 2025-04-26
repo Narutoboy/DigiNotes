@@ -29,6 +29,7 @@ import com.do_big.diginotes.model.Note;
 import com.do_big.diginotes.model.NoteViewModel;
 import com.do_big.diginotes.model.SharedViewModel;
 import com.do_big.diginotes.utils.AppConstant;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class HomeActivity extends AppCompatActivity
     private NoteViewModel viewModel;
     private SharedViewModel sharedViewModel;
     private ActivityHomeBinding binding;
+    private MaterialButton buttonShareApp, buttonRateApp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class HomeActivity extends AppCompatActivity
         binding.appBarContentMain.contentMain.myRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         binding.appBarContentMain.contentMain.myRecyclerView.setLayoutManager(mLayoutManager);
+
 
         NoteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
@@ -86,26 +90,32 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View view = navigationView.getHeaderView(0);
+        buttonShareApp = view.findViewById(R.id.button_share);
+        buttonRateApp = view.findViewById(R.id.button_rate);
+        buttonShareApp.setOnClickListener(v -> shareApp());
+        buttonRateApp.setOnClickListener(v -> rateApp());
+
     }
+
 
     private void showBottomSheetDialog() {
-        AddNotesFragment fragment= new AddNotesFragment();
-        fragment.show(getSupportFragmentManager(),"add");
+        AddNotesFragment fragment = new AddNotesFragment();
+        fragment.show(getSupportFragmentManager(), "add");
     }
-
 
 
     @Override
     protected void onResume() {
         super.onResume();
 
-       sharedViewModel.getVoiceInput().observe(this, new Observer<Boolean>() {
-           @Override
-           public void onChanged(Boolean aBoolean) {
-               promptSpeechInput();
-               sharedViewModel.setVoiceInput(false);
-           }
-       });
+        sharedViewModel.getVoiceInput().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                promptSpeechInput();
+                sharedViewModel.setVoiceInput(false);
+            }
+        });
     }
 
     @Override
@@ -120,7 +130,7 @@ public class HomeActivity extends AppCompatActivity
             b1.setPositiveButton("No", (arg0, arg1) -> arg0.cancel());
             b1.setNegativeButton("Yes", (arg0, arg1) -> HomeActivity.this.finish());
             overridePendingTransition(R.anim.right, R.anim.fadeout);
-              b1.show();
+            b1.show();
 
         }
     }
@@ -147,28 +157,39 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-       if (id == R.id.nav_how_it_work) {
-           startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
-        }  else if (id == R.id.rate_us) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
-            overridePendingTransition(R.anim.right, R.anim.fadeout);
+        if (id == R.id.nav_how_it_work) {
+            startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
+        } else if (id == R.id.button_rate) {
+            rateApp();
             return true;
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.button_share) {
 
 
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT,
-                    "DigiNotes : https://play.google.com/store/apps/details?id=com.do_big.diginotes");
-            sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-            overridePendingTransition(R.anim.right, R.anim.fadeout);
+            shareApp();
             return true;
+        } else if (id == R.id.nav_setting) {
+            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void rateApp() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.PLAY_STORE_PATH)));
+        overridePendingTransition(R.anim.right, R.anim.fadeout);
+    }
+
+    private void shareApp() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "DigiNotes : https://play.google.com/store/apps/details?id=com.do_big.diginotes");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+        overridePendingTransition(R.anim.right, R.anim.fadeout);
     }
 
 
@@ -198,8 +219,8 @@ public class HomeActivity extends AppCompatActivity
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                        sharedViewModel.setVoiceInputNoteDescription(result.get(0));
-                        showBottomSheetDialog();
+                    sharedViewModel.setVoiceInputNoteDescription(result.get(0));
+                    showBottomSheetDialog();
                     // etMultiline.setText(result.get(0));
                 }
                 break;
@@ -211,20 +232,20 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onNoteItemClick(int adapterPosition, Note note, int viewId) {
-        if(viewId== R.id.btn_fav){
+        if (viewId == R.id.btn_fav) {
             //TODO add lottie animation
             note.setFav(!note.isFav);
 
             NoteViewModel.update(note);
 
-        }else if (viewId == R.id.tv_edit){
+        } else if (viewId == R.id.tv_edit) {
             sharedViewModel.setSelectedItem(note);
             sharedViewModel.setEdit(true);
             showBottomSheetDialog();
 
-        }else if (viewId== R.id.tv_delete){
+        } else if (viewId == R.id.tv_delete) {
             NoteViewModel.delete(note);
-        }else{
+        } else {
             //on NoteItem clicked
             Intent intent = new Intent(HomeActivity.this, Description.class);
             intent.putExtra(AppConstant.ITEM_CLICKED_PARCEL, note);
