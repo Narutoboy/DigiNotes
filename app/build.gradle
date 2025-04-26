@@ -25,6 +25,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17 // Or your chosen version
+        targetCompatibility = JavaVersion.VERSION_17 // Or your chosen version
+    }
+
+    kotlinOptions {
+        jvmTarget = "17" // Or your chosen version
+    }
+
+    // Configure the JVM toolchain
+    compileSdk = 34
+    namespace = "com.do_big.diginotes"
+
+    kotlin {
+        jvmToolchain(17) // Or your chosen version
+    }
 
 
 }
@@ -33,12 +49,11 @@ dependencies {
     //material
     implementation("com.google.android.material:material:1.11.0")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
