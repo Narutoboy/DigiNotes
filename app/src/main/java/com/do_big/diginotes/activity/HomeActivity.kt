@@ -222,7 +222,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNoteItemClick(adapterPosition: Int, note: Note, viewId: Int) {
         if (viewId == R.id.btn_fav) {
             //TODO add lottie animation
-            note.setFav(!note.isFav)
+            note.isFav = !note.isFav
 
             NoteViewModel.update(note)
         } else if (viewId == R.id.tv_edit) {
