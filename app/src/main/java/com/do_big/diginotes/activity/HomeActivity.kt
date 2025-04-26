@@ -62,7 +62,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding!!.appBarContentMain.contentMain.myRecyclerView.layoutManager = mLayoutManager
 
 
-        NoteViewModel.getAllNotes().observe(this, object : Observer<List<Note?>?> {
+        NoteViewModel.allNotes.observe(this, object : Observer<List<Note?>?> {
             override fun onChanged(value: List<Note?>?) {
                 mAdapter = SearchAdapter(value, this@HomeActivity)
                 binding!!.appBarContentMain.contentMain.myRecyclerView.adapter = mAdapter

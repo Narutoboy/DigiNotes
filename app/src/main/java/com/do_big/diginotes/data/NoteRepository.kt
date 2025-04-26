@@ -1,57 +1,36 @@
-package com.do_big.diginotes.data;
+package com.do_big.diginotes.data
 
-import android.app.Application;
+import android.app.Application
+import androidx.lifecycle.LiveData
+import com.do_big.diginotes.model.Note
+import com.do_big.diginotes.utils.NoteRoomDataBase
+import com.do_big.diginotes.utils.NoteRoomDataBase.Companion.getINSTANCE
 
-import androidx.lifecycle.LiveData;
+class NoteRepository(application: Application) {
+    private val noteDao: NoteDao
 
-import com.do_big.diginotes.model.Note;
-import com.do_big.diginotes.utils.NoteRoomDataBase;
+    @JvmField
+    val allNotes: LiveData<List<Note>>
 
-import java.util.List;
-
-public class NoteRepository {
-    private final NoteDao noteDao;
-    private final LiveData<List<Note>> allNotes;
-
-    public NoteRepository(Application application) {
-        NoteRoomDataBase noteRoomDataBase = NoteRoomDataBase.getINSTANCE(application);
-        noteDao = noteRoomDataBase.noteDao();
-        allNotes = noteDao.getNotes();
+    init {
+        val noteRoomDataBase = getINSTANCE(application)
+        noteDao = noteRoomDataBase!!.noteDao()
+        allNotes = noteDao.notes
     }
 
-    public LiveData<List<Note>> getAllNotes() {
-        return allNotes;
+    fun insert(note: Note?) {
+        NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.insertNote(note) }
     }
 
-    public void insert(Note note) {
-        NoteRoomDataBase.databaseWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                noteDao.insertNote(note);
-            }
-        });
+    fun get(id: Long): LiveData<Note> {
+        return noteDao[id]
     }
 
-    public LiveData<Note> get(long id) {
-        return noteDao.get(id);
+    fun update(note: Note?) {
+        NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.update(note) }
     }
 
-    public void update(Note note) {
-        NoteRoomDataBase.databaseWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                noteDao.update(note);
-            }
-        });
+    fun delete(note: Note?) {
+        NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.delete(note) }
     }
-
-    public void delete(Note note) {
-        NoteRoomDataBase.databaseWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                noteDao.delete(note);
-            }
-        });
-    }
-
 }

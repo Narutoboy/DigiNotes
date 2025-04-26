@@ -60,11 +60,11 @@ class AddNotesFragment : BottomSheetDialogFragment() {
                     val title = etNote.substring(0, etNote.indexOf(' '))
                     NoteViewModel.insert(
                         Note(
-                            etNote,
-                            title,
-                            createdAt,
-                            false,
-                            null
+                            noteDescription = etNote,
+                            noteTitle = title,
+                            createdAt = createdAt,
+                            isFav = false,
+                            modifiedAt = null
                         )
                     )
                     Snackbar.make(
