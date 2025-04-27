@@ -1,34 +1,30 @@
-package com.do_big.diginotes.data;
+package com.do_big.diginotes.data
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.do_big.diginotes.model.Note;
-
-import java.util.List;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import com.do_big.diginotes.model.Note
 
 @Dao
-public interface NoteDao {
-
+interface NoteDao {
     @Insert
-    void insertNote(Note note);
+    fun insertNote(note: Note)
 
     @Query("DELETE FROM notes_table")
-    void deleteAll();
+    fun deleteAll()
 
-    @Query("SELECT * FROM notes_table")
-    LiveData<List<Note>> getNotes();
+    @get:Query("SELECT * FROM notes_table")
+    val notes: LiveData<List<Note>>
 
     @Query("SELECT * FROM notes_table WHERE notes_table.id==:id")
-    LiveData<Note>get(long id);
+    fun get(id: Long): LiveData<Note>
 
     @Update
-    void update(Note note);
+    fun update(note: Note)
 
     @Delete
-    void delete(Note note);
+    fun delete(note: Note)
 }
