@@ -18,19 +18,19 @@ class NoteRepository(application: Application) {
         allNotes = noteDao.notes
     }
 
-    fun insert(note: Note?) {
+    fun insert(note: Note) {
         NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.insertNote(note) }
     }
 
     fun get(id: Long): LiveData<Note> {
-        return noteDao[id]
+        return noteDao.get(id)
     }
 
-    fun update(note: Note?) {
+    fun update(note: Note) {
         NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.update(note) }
     }
 
-    fun delete(note: Note?) {
+    fun delete(note: Note) {
         NoteRoomDataBase.databaseWriterExecutor.execute { noteDao.delete(note) }
     }
 }
